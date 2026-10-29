@@ -336,7 +336,7 @@ const HEROES=[
 const defaultSave=()=>({gold:0,amber:0,best:0,volume:.65,artifacts:[],unlockedHeroes:['neo'],currentHero:'neo',stats:{radius:2,bombCap:1,speed:1,speedLevel:0}});
 function loadSave(){try{const raw=localStorage.getItem(STORE);if(!raw)return defaultSave();const data=JSON.parse(raw),unlocked=Array.isArray(data.unlockedHeroes)?data.unlockedHeroes.filter(id=>HEROES.some(hero=>hero.id===id)):['neo'];if(!unlocked.includes('neo'))unlocked.unshift('neo');const currentHero=unlocked.includes(data.currentHero)?data.currentHero:'neo',stats={...defaultSave().stats,...(data.stats||{})};if(!Number.isFinite(data.stats?.speedLevel))stats.speedLevel=Math.min(5,Math.max(0,Math.round((stats.speed-1)/.15)));return {gold:Number.isFinite(data.gold)?Math.max(0,data.gold):0,amber:Number.isFinite(data.amber)?Math.max(0,data.amber):0,best:Number.isFinite(data.best)?Math.max(0,data.best):0,volume:Number.isFinite(data.volume)?Math.min(1,Math.max(0,data.volume)):.65,artifacts:Array.isArray(data.artifacts)?data.artifacts.filter(id=>['magnet','slow_time','acid_master','phoenix_feather','midas_touch'].includes(id)):[],unlockedHeroes:unlocked,currentHero,stats}}catch(error){console.warn('Не удалось загрузить сохранение:',error);return defaultSave()}}
 let save=loadSave(),grid=[],hiddenLoot=new Map(),player=null,bombs=[],crystals=[],coins=[],bot=null,goldItems=[],amberMinerals=[],enemies=[],particles=[],floaters=[],flames=[],acidItems=[],heartItems=[],exit={x:13,y:1},hiddenExit=null,exitRevealed=false;
-let round=1,score=0,roundGoldBonus=0,gameState='menu',lastTime=0,frame=0,shake=0,noticeTimer=0,stepTimer=0,keys=new Set();
+let round=1,score=0,roundGoldBonus=0,gameState='menu',lastTime=0,frame=0,shake=0,noticeTimer=0,stepTimer=0,keys=new Set(),directionQueue=[];
 let showSplash=true,splashTimer=4,splashMenuDelay=0;
 let isBossRound=false,boss=null,bossHP=0,bossMaxHP=50,bossName='ГЛАЗ ОМЕГА',timeAttackActive=false,isRingMode=false,timeAttackRemaining=60,resonanceMultiplier=1,hasAcidBomb=false,acidPuddles=[],screenFlash=0,taBest=0,taSpawnTimer=0,slowTimeRemaining=0,slowTimeUsedRound=false,overlayCloseTimer=0,deathGhost=null,deathTimer=0,activeHero=null,phoenixUsed=false;
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(save))}catch(error){console.warn('Не удалось сохранить прогресс:',error);setNotice('Не удалось сохранить прогресс браузера.')}}
@@ -372,7 +372,7 @@ function generateLevel(){
   for(const [x,y] of [[3,3],[11,3],[3,5],[11,5],[5,2],[9,6]])grid[y][x]=2;
   for(const [x,y] of [[1,7],[1,6],[2,7],[13,1],[12,1],[13,2]])grid[y][x]=0;
   blockHp.clear();for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(BLOCK_MAX_HP[grid[y][x]])blockHp.set(cellKey(x,y),BLOCK_MAX_HP[grid[y][x]]);
-  player={x:start.x,y:start.y,renderX:start.x,renderY:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
+  player={x:start.x,y:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
   const spec=bossSpec();bossName=spec.name;bossMaxHP=bossHealthForRound();bossHP=bossMaxHP;boss={x:7,y:4,moveTimer:1.5,roarTimer:3,type:spec.attack,color:spec.color,light:spec.light,dark:spec.dark,phase:0};crystals=[];goldItems=[];amberMinerals=[];hiddenLoot=new Map();bombs=[];enemies=[];particles=[];floaters=[];flames=[];acidPuddles=[];acidItems=[];heartItems=[];roundGoldBonus=0;slowTimeUsedRound=false;
   updateHUD();setNotice(`БОСС-РАУНД ${round}! ${bossName}: ${bossHP} HP. Используй бомбы и уклоняйся от атак.`);return;
  }
@@ -454,7 +454,7 @@ function generateLevel(){
  const destructibleCount=grid.flat().filter(t=>BLOCK_MAX_HP[t]).length;
  if(destructibleCount===0)console.warn('BLAST RUN: на уровне нет разрушаемых блоков; проверьте генерацию.');
  hiddenLoot=new Map();if(!isRingMode)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===2||grid[y][x]===3||grid[y][x]===4||grid[y][x]===5||grid[y][x]===6){const roll=Math.random();if(roll<.05)hiddenLoot.set(cellKey(x,y),'amber_mineral');else if(roll<.10)hiddenLoot.set(cellKey(x,y),'life');else if(roll<.15)hiddenLoot.set(cellKey(x,y),'acid');else if(roll<.45)hiddenLoot.set(cellKey(x,y),BONUS_TYPES[rand(BONUS_TYPES.length)])}
- player={x:start.x,y:start.y,renderX:start.x,renderY:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
+ player={x:start.x,y:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
  bombs=[];coins=[];bot=null;enemies=[];particles=[];floaters=[];flames=[];acidPuddles=[];acidItems=[];heartItems=[];goldItems=[];amberMinerals=[];roundGoldBonus=0;slowTimeUsedRound=false;spawnEnemies();updateHUD();
 }
 function spawnEnemies(){
@@ -465,7 +465,12 @@ function spawnEnemies(){
 }
 
 // INPUT
-function currentDirection(){for(const k of ['ArrowUp','w','W','ArrowRight','d','D','ArrowDown','s','S','ArrowLeft','a','A'])if(keys.has(k)){if(k==='ArrowUp'||k==='w'||k==='W')return {x:0,y:-1};if(k==='ArrowRight'||k==='d'||k==='D')return {x:1,y:0};if(k==='ArrowDown'||k==='s'||k==='S')return {x:0,y:1};return {x:-1,y:0}}return null}
+function directionForKey(key){if(key==='ArrowUp'||key==='w'||key==='W')return {x:0,y:-1};if(key==='ArrowRight'||key==='d'||key==='D')return {x:1,y:0};if(key==='ArrowDown'||key==='s'||key==='S')return {x:0,y:1};if(key==='ArrowLeft'||key==='a'||key==='A')return {x:-1,y:0};return null}
+function currentDirection(){
+ if(directionQueue.length)return directionQueue[0];
+ for(const key of ['ArrowUp','w','W','ArrowRight','d','D','ArrowDown','s','S','ArrowLeft','a','A'])if(keys.has(key))return directionForKey(key);
+ return null;
+}
 function movePlayer(dx,dy){
     if (gameState !== 'playing' || Math.abs(dx) + Math.abs(dy) !== 1) return false;
     const x = player.x + dx, y = player.y + dy;
@@ -478,6 +483,7 @@ function movePlayer(dx,dy){
     player.dir = { x: dx, y: dy };
     player.walk += 1; // Для анимации ног
     collectAtPlayer();
+    particles.push({x:(x-dx)*TILE+TILE/2,y:(y-dy)*TILE+TILE/2,vx:0,vy:0,t:.3,color:'rgba(100,232,239,.4)',size:9});
     return true;
 }
 function bombAction(){
@@ -491,7 +497,7 @@ function bombAction(){
  if(grid[player.y][player.x]!==0||hasBomb(player.x,player.y)){setNotice('Здесь нельзя поставить бомбу.');return}
  bombs.push({x:player.x,y:player.y,t:fuseTime,owner:'player',dead:false,carried:false,paused:false,acid:hasAcidBomb,id:Math.random()});if(hasAcidBomb){hasAcidBomb=false;setNotice('Кислотная бомба установлена!')}updateHUD();
 }
-function setDirection(key,down){if(down)keys.add(key);else keys.delete(key)}
+function setDirection(key,down){if(down){if(keys.has(key))return;keys.add(key);const direction=directionForKey(key);if(direction&&gameState==='playing')directionQueue.push(direction)}else keys.delete(key)}
 
 // EXPLOSION LOGIC
 function shakeScreen(amount=7){shake=Math.min(14,shake+amount)}
@@ -554,7 +560,7 @@ function update(dt){
  if(showSplash){splashTimer=Math.max(0,splashTimer-dt);if(splashTimer<=0){showSplash=false;splashMenuDelay=.3}return}
  if(splashMenuDelay>0){splashMenuDelay=Math.max(0,splashMenuDelay-dt);if(splashMenuDelay===0&&gameState==='menu')showStartMenuOverlay();return}
  if(!player||!Array.isArray(grid)||grid.length!==H||grid.some(row=>!Array.isArray(row)||row.length!==W))return;
- frame++;if(gameState==='dying'){deathTimer=Math.max(0,deathTimer-dt);if(deathGhost)deathGhost.t=deathTimer;if(deathTimer<=0)gameOver('ЗАПАС ЖИЗНЕЙ ИСЧЕРПАН');for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.t-=dt}particles=particles.filter(p=>p.t>0);return}if(gameState!=='playing')return;
+ frame++;if(gameState==='dying'){deathTimer=Math.max(0,deathTimer-dt);if(deathGhost)deathGhost.t=deathTimer;if(deathTimer<=0)gameOver('ЗАПАС ЖИЗНЕЙ ИСЧЕРПАН');for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.t-=dt}particles=particles.filter(p=>p.t>0);return}if(gameState!=='playing'){directionQueue=[];return}
  const realDt=dt;if(slowTimeRemaining>0){slowTimeRemaining=Math.max(0,slowTimeRemaining-realDt);dt*=.35}
  if(timeAttackActive){timeAttackRemaining=Math.max(0,timeAttackRemaining-dt);if(timeAttackRemaining<=0){finishTimeAttack();return}taSpawnTimer-=dt;if(taSpawnTimer<=0){taSpawnTimer=8;spawnTimeAttackWave()}}
  if(isRingMode){timeAttackRemaining=Math.max(0,timeAttackRemaining-dt);if(timeAttackRemaining<=0){finishRingMode();return}}
@@ -562,15 +568,15 @@ function update(dt){
  stepTimer-=dt;
  const direction=currentDirection();
  if(direction&&stepTimer<=0){
-  const oldX=player.x,oldY=player.y;
-  if(movePlayer(direction.x,direction.y)){
-   particles.push({x:oldX*TILE+TILE/2,y:oldY*TILE+TILE/2,vx:0,vy:0,t:.3,color:'rgba(100,232,239,.4)',size:9});
+  const moved=movePlayer(direction.x,direction.y);
+  if(directionQueue[0]===direction)directionQueue.shift();
+  if(moved){
+   const baseDelay=isMobile ? .18 : .12;
+   stepTimer=baseDelay/Math.min(2,save.stats.speed*(activeHero?.speed||1));
+  }else{
+   stepTimer=.05;
   }
-  stepTimer=(isMobile ? .22 : STEP_DELAY)/Math.min(2,save.stats.speed*(activeHero?.speed||1));
  }
- const lerpSpeed=isMobile?10:20,lerpFactor=Math.min(1,lerpSpeed*dt);
- player.renderX+=(player.x-player.renderX)*lerpFactor;
- player.renderY+=(player.y-player.renderY)*lerpFactor;
  collectAtPlayer();if(isRingMode){collectRingCoin(player.x,player.y,false);updateRingBot(dt);if(gameState!=='playing')return}
  for(const b of [...bombs])if(!b.dead&&!b.carried){b.t-=dt;if(b.t<=0)explodeBomb(b)}
  bombs=bombs.filter(b=>!b.dead);
@@ -640,7 +646,7 @@ function draw(){
   if(player){
    const viewWidth=canvas.width/camera.zoom,viewHeight=canvas.height/camera.zoom;
    const mapWidth=W*TILE,mapHeight=H*TILE,halfViewWidth=viewWidth/2,halfViewHeight=viewHeight/2;
-   const playerCenterX=player.renderX*TILE+TILE/2,playerCenterY=player.renderY*TILE+TILE/2;
+   const playerCenterX=player.x*TILE+TILE/2,playerCenterY=player.y*TILE+TILE/2;
    camera.x=mapWidth<=viewWidth?mapWidth/2:Math.max(halfViewWidth,Math.min(mapWidth-halfViewWidth,playerCenterX));
    camera.y=mapHeight<=viewHeight?mapHeight/2:Math.max(halfViewHeight,Math.min(mapHeight-halfViewHeight,playerCenterY));
    ctx.translate(canvas.width/2,canvas.height/2);
@@ -719,7 +725,7 @@ function draw(){
   ctx.restore();
  }
  if(bot){const x=bot.x*TILE+32,y=bot.y*TILE+32,bob=Math.sin((bot.walk||0)*2)*2,botSprite=bot.animTimer>0&&frame%12<6?'enemy_bot_2':'enemy_bot_1',visible=bot.invuln<=0||Math.floor(frame/4)%2===0;ctx.save();ctx.globalAlpha=visible?1:.3;if(!drawSprite(botSprite,x-36,y-36+bob,72,72,0)){ctx.shadowBlur=16;ctx.shadowColor=bot.color;ctx.fillStyle='#8c143e';ctx.fillRect(x-9,y+8+bob,7,13);ctx.fillRect(x+3,y+8-bob,7,13);ctx.fillStyle=bot.color;ctx.fillRect(x-13,y-13+bob,26,23);ctx.fillStyle='#ffd7e5';ctx.fillRect(x-9,y-24+bob,18,13);ctx.fillStyle='#351022';ctx.fillRect(x-6,y-19+bob,4,4);ctx.fillRect(x+3,y-19+bob,4,4)}ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(`♥ ${bot.lives}   🪙 ${bot.coins}`,x,y-30+bob);ctx.restore()}
- if(player&&gameState!=='dying'){const px=player.renderX*TILE+32,py=player.renderY*TILE+32;const facingLeft=(player.dir&&player.dir.x!==0?player.dir.x<0:(player.facing??1)<0);drawHeroSprite(px,py,activeHero?.id||save.currentHero,player.walk,player.invuln>0&&Math.floor(frame/4)%2===0 ? .4 : 1,facingLeft)}
+ if(player&&gameState!=='dying'){const px=player.x*TILE+32,py=player.y*TILE+32;const facingLeft=(player.dir&&player.dir.x!==0?player.dir.x<0:(player.facing??1)<0);drawHeroSprite(px,py,activeHero?.id||save.currentHero,player.walk,player.invuln>0&&Math.floor(frame/4)%2===0 ? .4 : 1,facingLeft)}
  if(deathGhost&&deathGhost.t>0){const alpha=Math.min(.38,deathGhost.t*.38);const facingLeft=(deathGhost.heroDir??1)<0;drawHeroSprite(deathGhost.x*TILE+32,deathGhost.y*TILE+32,deathGhost.heroId,0,alpha,facingLeft)}
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.t*2);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size)}ctx.globalAlpha=1;for(const f of floaters){ctx.globalAlpha=Math.min(1,f.t*1.5);ctx.fillStyle=f.color;ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.fillText(f.text,f.x,f.y)}ctx.globalAlpha=1;
  ctx.fillStyle=theme.accent;ctx.font='bold 12px monospace';ctx.textAlign='left';ctx.fillText(isRingMode?`РИНГ · ${Math.ceil(timeAttackRemaining)} СЕК`:timeAttackActive?`TIME ATTACK · ${Math.ceil(timeAttackRemaining)} СЕК`:isBossRound?`БОСС-РАУНД ${round}`:`${theme.name}  ·  РАУНД ${round}`,12,19);if(screenFlash>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(.85,screenFlash*8)})`;ctx.fillRect(0,0,canvas.width,canvas.height)}ctx.restore();
@@ -746,7 +752,7 @@ function drawMiniMap(){
  }
  for(const enemy of enemies)if(!enemy.dead){ctx.fillStyle='#ff546f';ctx.beginPath();ctx.arc(mapX+(enemy.x+.5)*cellWidth,mapY+(enemy.y+.5)*cellHeight,2,0,Math.PI*2);ctx.fill()}
  if(bot){ctx.fillStyle=bot.color;ctx.beginPath();ctx.arc(mapX+(bot.x+.5)*cellWidth,mapY+(bot.y+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill()}
- ctx.fillStyle='#fff36b';ctx.beginPath();ctx.arc(mapX+(player.renderX+.5)*cellWidth,mapY+(player.renderY+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#fff36b';ctx.beginPath();ctx.arc(mapX+(player.x+.5)*cellWidth,mapY+(player.y+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill();
  ctx.restore();
 }
 
@@ -880,7 +886,7 @@ const canvasSizeObserver=new ResizeObserver(syncCanvasViewport);
 canvasSizeObserver.observe(boardWrap);
 window.addEventListener('resize',updateResponsiveMode);
 window.addEventListener('keydown',e=>{const key=e.key;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(key))e.preventDefault();if(key===' '&&!e.repeat)bombAction();else if(key.toLowerCase()==='r'&&!e.repeat){if(gameState!=='shop')startNewRun()}else setDirection(key,true)});
-window.addEventListener('keyup',e=>setDirection(e.key,false));window.addEventListener('blur',()=>keys.clear());
+window.addEventListener('keyup',e=>setDirection(e.key,false));window.addEventListener('blur',()=>{keys.clear();directionQueue=[]});
 document.querySelectorAll('[data-dir]').forEach(button=>{const map={up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight'},key=map[button.dataset.dir];button.addEventListener('pointerdown',e=>{e.preventDefault();setDirection(key,true);button.setPointerCapture(e.pointerId)});for(const type of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(type,()=>setDirection(key,false))});
 $('bombBtn').addEventListener('click',bombAction);$('restart').addEventListener('click',startNewRun);
 document.body.addEventListener('click',()=>{if(!audioContext){initAudio();if(musicEnabled)startBackgroundMusic()}},{once:true});
