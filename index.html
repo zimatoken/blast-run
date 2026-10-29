@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101925">
 <title>BLAST RUN — Retro Neon</title>
 <style>
@@ -17,9 +17,257 @@ canvas{display:block;width:100%;height:auto;image-rendering:pixelated;touch-acti
 .bottom{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-top:12px;color:var(--muted);font-size:11px;line-height:1.7}.help b{color:var(--text)}
 button{font:inherit;cursor:pointer;color:var(--text);background:#1b2b3e;border:1px solid #405771;border-radius:10px;padding:11px 14px;transition:transform .08s,border-color .15s,background .15s}button:hover{border-color:var(--gold);background:#26394e}button:active{transform:scale(.98)}button.primary{border-color:#c28b1c;color:#ffe1a0;background:#332b1b}button:disabled{opacity:.45;cursor:not-allowed}
 @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:#09111ddd;backdrop-filter:blur(4px);z-index:5}.overlay.show,.overlay.closing{display:flex}.overlay.show .modal{animation:slideUp .3s ease-out both}.overlay.closing .modal{animation:slideUp .3s ease-in reverse both}.modal{width:min(760px,100%);max-height:100%;overflow:hidden;display:flex;flex-direction:column;border:1px solid #435b75;border-radius:16px;background:linear-gradient(145deg,#1b2b3e,#111c2a);padding:22px;box-shadow:0 20px 70px #0009}.overlay.menu-overlay{background:rgba(9,17,29,.28)}.overlay.menu-overlay .modal{background:linear-gradient(145deg,rgba(27,43,62,.88),rgba(17,28,42,.88))}.modal h2{margin:0 0 7px;font-size:clamp(20px,4vw,28px);letter-spacing:2px}.modal p{color:var(--muted);font-size:12px;line-height:1.65}.shop-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.shop-tabs button.active{border-color:var(--gold);color:var(--gold);background:#332b1b}.shop-pages{overflow:auto;min-height:0;flex:1}.shop-tab-content{display:none}.shop-tab-content.active{display:block}.shop-footer{flex-shrink:0;padding-top:10px;border-top:1px solid #30445b}.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.shop-item{display:flex;min-height:132px;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:linear-gradient(145deg,#243d55,#182a3d);border-color:#52728d}.shop-item:hover{background:linear-gradient(145deg,#315879,#203c56);border-color:var(--cyan);box-shadow:0 0 14px #65e8ef66,0 0 28px #65e8ef33}.shop-item strong{color:var(--gold)}.shop-item small{flex:1;color:var(--muted);font-size:11px;line-height:1.45}
+.overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:#09111ddd;backdrop-filter:blur(4px);z-index:5}.overlay.show,.overlay.closing{display:flex}.overlay.show .modal{animation:slideUp .3s ease-out both}.overlay.closing .modal{animation:slideUp .3s ease-in reverse both}.modal{width:min(760px,100%);max-height:95vh;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;border:1px solid #435b75;border-radius:16px;background:linear-gradient(145deg,#1b2b3e,#111c2a);padding:22px;box-shadow:0 20px 70px #0009}.overlay.menu-overlay{background:rgba(9,17,29,.28)}.overlay.menu-overlay .modal{background:linear-gradient(145deg,rgba(27,43,62,.88),rgba(17,28,42,.88))}.modal h2{margin:0 0 7px;font-size:clamp(20px,4vw,28px);letter-spacing:2px}.modal p{color:var(--muted);font-size:12px;line-height:1.65}.shop-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.shop-tabs button.active{border-color:var(--gold);color:var(--gold);background:#332b1b}.shop-pages{overflow:visible;min-height:0;flex:none}.shop-tab-content{display:none}.shop-tab-content.active{display:block}.shop-footer{flex-shrink:0;padding-top:10px;border-top:1px solid #30445b}.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.shop-item{display:flex;min-height:132px;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:linear-gradient(145deg,#243d55,#182a3d);border-color:#52728d}.shop-item:hover{background:linear-gradient(145deg,#315879,#203c56);border-color:var(--cyan);box-shadow:0 0 14px #65e8ef66,0 0 28px #65e8ef33}.shop-item strong{color:var(--gold)}.shop-item small{flex:1;color:var(--muted);font-size:11px;line-height:1.45}
 .mobile-controls{display:none;gap:12px;justify-content:space-between;align-items:center;margin-top:12px}.dpad{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,42px);gap:4px}.dpad button{padding:0;font-size:18px}.actions{display:flex;gap:7px}.actions button{min-width:60px;min-height:48px}.notice{min-height:20px;margin-top:7px;color:#b8c9df;font-size:11px}
-@media(max-width:650px){body{padding:9px}.bottom{flex-direction:column}.shop-grid{grid-template-columns:1fr}.shop-item{min-height:unset;flex-direction:row;align-items:center}.shop-item small{flex:1}.mobile-controls{display:flex}.version{font-size:8px}.pill{padding:7px 9px;font-size:10px}.modal{padding:16px}}
+@media(max-width:650px){
+  body { padding: 4px; }
+  .bottom { flex-direction: column; }
+  .hud { gap: 4px; }
+  .mobile-controls { display: flex; gap: 6px; margin-top: 6px; }
+  .dpad { grid-template-columns: repeat(3, 36px); grid-template-rows: repeat(2, 36px); }
+  .version { font-size: 8px; }
+  .pill { padding: 4px 6px; font-size: 9px; }
+
+  .modal {
+    padding: 16px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shop-pages {
+    overflow: visible !important;
+    min-height: auto !important;
+    flex: none !important;
+  }
+
+  .shop-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    margin: 10px 0 !important;
+  }
+
+  .shop-item {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: 48px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto !important;
+    align-items: center !important;
+    gap: 4px 10px !important;
+    padding: 8px 10px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    text-align: left !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  .shop-item img {
+    grid-column: 1 !important;
+    grid-row: 1 / span 3 !important;
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+  }
+
+  .shop-item div {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+  }
+
+  .shop-item strong {
+    font-size: 12px !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+    white-space: normal !important;
+  }
+  .shop-item small {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    display: block !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .music-controls {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+    font-size: 11px !important;
+    background: #152234 !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .music-controls button {
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+  }
+
+  .music-controls input[type="range"] {
+    width: 80px !important;
+  }
+}
+
+/* BLAST RUN MOBILE RELEASE PATCH: viewport-safe overlays, scrollable menus, touch ergonomics */
+html { min-height: 100%; min-height: 100dvh; overflow-x: clip; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+button, input, select, textarea { touch-action: manipulation; }
+button { min-height: 42px; }
+button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.board-wrap { isolation: isolate; }
+.overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000 !important;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)) !important;
+}
+.modal {
+  flex: 0 0 auto !important;
+  width: min(760px, 100%) !important;
+  max-height: calc(100vh - 24px) !important;
+  max-height: calc(100dvh - max(24px, env(safe-area-inset-top) + env(safe-area-inset-bottom))) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  margin: auto 0 !important;
+  scrollbar-gutter: stable;
+}
+.shop-pages, .shop-tab-content.active { min-width: 0; }
+.shop-grid { min-width: 0; }
+.shop-item { min-width: 0; overflow-wrap: anywhere; }
+.shop-item small { overflow-wrap: anywhere; }
+.mobile-controls button { user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+@media (max-width: 700px) {
+  body { padding: max(4px, env(safe-area-inset-top)) max(4px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left)); }
+  .app { width: 100%; min-width: 0; }
+  header { align-items: center; gap: 8px; margin-bottom: 6px; }
+  .brand { font-size: clamp(21px, 6vw, 28px); letter-spacing: clamp(2px, 1vw, 4px); }
+  .version { max-width: 42%; font-size: 8px; letter-spacing: .5px; }
+  .hud { gap: 4px; margin-bottom: 4px; }
+  .pill { padding: 4px 6px; border-radius: 8px; font-size: 9px; }
+  .board-wrap { margin: 0; border-radius: 10px; }
+  .bottom { gap: 8px; margin-top: 6px; font-size: 10px; }
+  .bottom > button { width: 100%; min-height: 44px; }
+  .mobile-controls { gap: 6px; margin-top: 6px; align-items: center; }
+  .dpad { grid-template-columns: repeat(3, 36px); grid-template-rows: repeat(2, 36px); gap: 4px; }
+  .dpad button { min-width: 36px; min-height: 36px; border-radius: 8px; padding: 0; }
+  .actions { flex: 1; justify-content: flex-end; }
+  .actions button { min-width: 64px; width: auto; height: 44px; min-height: 40px; padding: 4px 8px; line-height: 1.1; }
+  .notice { min-height: 16px; margin-top: 3px; }
+  .modal { width: 95% !important; padding: 16px !important; max-height: 90vh !important; border-radius: 13px; }
+  .modal h2 { font-size: clamp(19px, 5vw, 25px); line-height: 1.2; }
+  .modal p { font-size: 12px; }
+  .shop-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 8px; }
+  .shop-tabs button { flex: 1 1 auto; min-height: 42px; }
+}
+@media (max-width: 380px) {
+  .version { display: none; }
+  .pill { font-size: 9px; padding: 4px 6px; }
+  .mobile-controls { align-items: flex-start; }
+  .actions { align-self: center; }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  body { padding: max(4px, env(safe-area-inset-top)) max(4px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left)); }
+  header { margin-bottom: 6px; }
+  .hud { gap: 4px; margin-bottom: 6px; }
+  .pill { padding: 4px 6px; }
+  .mobile-controls { margin-top: 6px; }
+  .overlay { align-items: flex-start !important; }
+  .modal { margin: 0 auto !important; max-height: calc(100dvh - 12px) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+@media (max-width: 700px) {
+  body {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: stretch;
+  }
+  .app {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "hud"
+      "boss"
+      "board"
+      "controls"
+      "bottom"
+      "notice";
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto auto auto;
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+  }
+  .app > header { grid-area: header; }
+  .app > .hud { grid-area: hud; }
+  .app > .boss-hud { grid-area: boss; }
+  .board-wrap {
+    grid-area: board;
+    display: grid;
+    min-height: 0;
+  }
+  .board-wrap > canvas {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+  }
+  .board-wrap > .overlay {
+    grid-area: 1 / 1;
+  }
+  .mobile-controls {
+    grid-area: controls;
+    display: flex;
+    margin-top: 4px;
+  }
+  .bottom {
+    grid-area: bottom;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .bottom .help {
+    display: none;
+  }
+  .bottom > button {
+    width: auto;
+  }
+  .notice {
+    grid-area: notice;
+    margin-top: 2px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -28,6 +276,8 @@ button{font:inherit;cursor:pointer;color:var(--text);background:#1b2b3e;border:1
 <div class="hud">
   <div class="pill" id="crystalsPill">КРИСТАЛЛЫ: <b id="crystals">0 / 5</b></div>
   <div class="pill">СЧЁТ: <b id="score">0</b></div>
+  <div class="pill" id="ringScorePill" style="display:none">МОНЕТЫ: <b id="ringScore">0 / 0</b></div>
+  <div class="pill" id="ringLivesPill" style="display:none">ЖИЗНИ: <b id="ringLives">3 / 3</b></div>
   <div class="pill">РЕКОРД: <b id="best">0</b></div>
   <div class="pill" id="roundPill">РАУНД: <b id="round">1</b></div>
   <div class="pill">ГЕРОЙ: <b id="heroHud">🧑🏻‍🚀 НЕО</b></div>
@@ -35,7 +285,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:#1b2b3e;border:1
   <div class="pill">ЯНТАРЬ: <b id="amberCount">0</b></div>
   <div class="pill">БОМБЫ: <b id="bombCount">0 / 1</b></div>
   <div class="pill">ТИП БОМБЫ: <b id="bombType">💣 ОБЫЧНАЯ</b></div>
-  <div class="pill">ЗДОРОВЬЕ: <b id="health">♥ ♥ ♥</b></div>
+  <div class="pill" id="healthPill">ЗДОРОВЬЕ: <b id="health">♥ ♥ ♥</b></div>
   <div class="pill" id="timerPill" style="display:none">ВРЕМЯ: <b id="timer">60</b></div>
 </div>
 <div class="boss-hud" id="bossHUD"><div class="boss-title"><strong>БОСС · ГЛАЗ ОМЕГА</strong><strong id="bossLabel">50 / 50 HP</strong></div><div class="boss-track"><div class="boss-fill" id="bossFill"></div></div></div>
@@ -56,6 +306,7 @@ button{font:inherit;cursor:pointer;color:var(--text);background:#1b2b3e;border:1
 let TILE=64;
 const W=15,H=9,GOAL=5,BOMB_TIME=2.5,STEP_DELAY=.15,STORE='blast-run-grid-v1';
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const boardWrap=canvas.parentElement,canvasBaseWidth=canvas.width,canvasBaseHeight=canvas.height;
 let isMobile=false;
 const camera={x:0,y:0,zoom:1.5};
 const $=id=>document.getElementById(id);
@@ -84,16 +335,23 @@ const HEROES=[
 ];
 const defaultSave=()=>({gold:0,amber:0,best:0,volume:.65,artifacts:[],unlockedHeroes:['neo'],currentHero:'neo',stats:{radius:2,bombCap:1,speed:1,speedLevel:0}});
 function loadSave(){try{const raw=localStorage.getItem(STORE);if(!raw)return defaultSave();const data=JSON.parse(raw),unlocked=Array.isArray(data.unlockedHeroes)?data.unlockedHeroes.filter(id=>HEROES.some(hero=>hero.id===id)):['neo'];if(!unlocked.includes('neo'))unlocked.unshift('neo');const currentHero=unlocked.includes(data.currentHero)?data.currentHero:'neo',stats={...defaultSave().stats,...(data.stats||{})};if(!Number.isFinite(data.stats?.speedLevel))stats.speedLevel=Math.min(5,Math.max(0,Math.round((stats.speed-1)/.15)));return {gold:Number.isFinite(data.gold)?Math.max(0,data.gold):0,amber:Number.isFinite(data.amber)?Math.max(0,data.amber):0,best:Number.isFinite(data.best)?Math.max(0,data.best):0,volume:Number.isFinite(data.volume)?Math.min(1,Math.max(0,data.volume)):.65,artifacts:Array.isArray(data.artifacts)?data.artifacts.filter(id=>['magnet','slow_time','acid_master','phoenix_feather','midas_touch'].includes(id)):[],unlockedHeroes:unlocked,currentHero,stats}}catch(error){console.warn('Не удалось загрузить сохранение:',error);return defaultSave()}}
-let save=loadSave(),grid=[],hiddenLoot=new Map(),player=null,bombs=[],crystals=[],goldItems=[],amberMinerals=[],enemies=[],particles=[],floaters=[],flames=[],acidItems=[],heartItems=[],exit={x:13,y:1},hiddenExit=null,exitRevealed=false;
+let save=loadSave(),grid=[],hiddenLoot=new Map(),player=null,bombs=[],crystals=[],coins=[],bot=null,goldItems=[],amberMinerals=[],enemies=[],particles=[],floaters=[],flames=[],acidItems=[],heartItems=[],exit={x:13,y:1},hiddenExit=null,exitRevealed=false;
 let round=1,score=0,roundGoldBonus=0,gameState='menu',lastTime=0,frame=0,shake=0,noticeTimer=0,stepTimer=0,keys=new Set();
 let showSplash=true,splashTimer=4,splashMenuDelay=0;
-let isBossRound=false,boss=null,bossHP=0,bossMaxHP=50,bossName='ГЛАЗ ОМЕГА',timeAttackActive=false,timeAttackRemaining=60,resonanceMultiplier=1,hasAcidBomb=false,acidPuddles=[],screenFlash=0,taBest=0,taSpawnTimer=0,slowTimeRemaining=0,slowTimeUsedRound=false,overlayCloseTimer=0,deathGhost=null,deathTimer=0,activeHero=null,phoenixUsed=false;
+let isBossRound=false,boss=null,bossHP=0,bossMaxHP=50,bossName='ГЛАЗ ОМЕГА',timeAttackActive=false,isRingMode=false,timeAttackRemaining=60,resonanceMultiplier=1,hasAcidBomb=false,acidPuddles=[],screenFlash=0,taBest=0,taSpawnTimer=0,slowTimeRemaining=0,slowTimeUsedRound=false,overlayCloseTimer=0,deathGhost=null,deathTimer=0,activeHero=null,phoenixUsed=false;
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(save))}catch(error){console.warn('Не удалось сохранить прогресс:',error);setNotice('Не удалось сохранить прогресс браузера.')}}
 function setNotice(text){$('notice').textContent=text;noticeTimer=2.5}
 function rand(n){return Math.floor(Math.random()*n)}
 function cellKey(x,y){return y*W+x}
 function inside(x,y){return x>=0&&y>=0&&x<W&&y<H}
-function updateResponsiveMode(){isMobile=window.innerWidth<800;TILE=isMobile?96:64}
+function syncCanvasViewport(){
+ const width=canvas.clientWidth,height=canvas.clientHeight;
+ if(!width||!height)return;
+ const targetHeight=isMobile?Math.round(canvasBaseWidth*height/width):canvasBaseHeight;
+ if(canvas.width!==canvasBaseWidth)canvas.width=canvasBaseWidth;
+ if(canvas.height!==targetHeight)canvas.height=targetHeight;
+}
+function updateResponsiveMode(){isMobile=window.innerWidth<800;TILE=isMobile?96:64;syncCanvasViewport()}
 function tileAt(x,y){return inside(x,y)?grid[y][x]:1}
 function hasBomb(x,y){return bombs.some(b=>!b.dead&&!b.carried&&b.x===x&&b.y===y)}
 function getTheme(){return THEMES[round<=5?0:round<=10?1:2]}
@@ -102,19 +360,19 @@ function bossSpec(){return BOSS_TYPES[(Math.max(1,Math.floor(round/5))-1)%BOSS_T
 function bossHealthForRound(){return bossSpec().hp+Math.max(0,Math.floor((round-25)/5))*15}
 function selectedHero(){return HEROES.find(hero=>hero.id===save.currentHero)||HEROES[0]}
 try{taBest=Number(localStorage.getItem(STORE+'-time-attack-best'))||0}catch(error){console.warn('Не удалось загрузить рекорд Time Attack:',error)}
-function updateHUD(){ $('crystals').textContent=crystals.filter(c=>c.taken).length+' / '+GOAL;$('score').textContent=score.toLocaleString('ru-RU');$('best').textContent=(timeAttackActive?taBest:Math.max(save.best,score)).toLocaleString('ru-RU');$('round').textContent=round;$('gold').textContent=save.gold;$('amberCount').textContent=save.amber;$('bombCount').textContent=bombs.filter(b=>!b.dead).length+' / '+save.stats.bombCap;$('health').textContent=Array.from({length:Math.ceil(player?.lives||0)},()=> '♥').join(' ')||'0';$('bombType').textContent=hasAcidBomb?'🧪 КИСЛОТНАЯ':'💣 ОБЫЧНАЯ';$('heroHud').textContent=`${selectedHero().emoji} ${selectedHero().name}`;$('timerPill').style.display=timeAttackActive?'':'none';$('timer').textContent=Math.max(0,Math.ceil(timeAttackRemaining));$('timerPill').style.color=timeAttackRemaining<=10?(frame%12<6?'#ff646b':'#ffffff'):'';$('bossHUD').classList.toggle('show',isBossRound&&gameState==='playing');if(isBossRound){$('bossHUD').querySelector('.boss-title strong').textContent=`БОСС · ${bossName}`;$('bossLabel').textContent=`${bossHP} / ${bossMaxHP} HP`;$('bossFill').style.width=`${Math.max(0,bossHP/bossMaxHP*100)}%`}}
+function updateHUD(){ $('crystalsPill').style.display=isRingMode?'none':'';$('ringScorePill').style.display=isRingMode?'':'none';$('ringLivesPill').style.display=isRingMode?'':'none';$('healthPill').style.display=isRingMode?'none':'';$('ringScore').textContent=`${score} / ${bot?.coins||0}`;$('ringLives').textContent=`${Math.ceil(player?.lives||0)} / ${bot?.lives||0}`;$('score').textContent=score.toLocaleString('ru-RU');$('crystals').textContent=crystals.filter(c=>c.taken).length+' / '+GOAL;$('best').textContent=(isRingMode?save.best:timeAttackActive?taBest:Math.max(save.best,score)).toLocaleString('ru-RU');$('round').textContent=round;$('gold').textContent=save.gold;$('amberCount').textContent=save.amber;$('bombCount').textContent=bombs.filter(b=>!b.dead).length+' / '+save.stats.bombCap;$('health').textContent=Array.from({length:Math.ceil(player?.lives||0)},()=> '♥').join(' ')||'0';$('bombType').textContent=hasAcidBomb?'🧪 КИСЛОТНАЯ':'💣 ОБЫЧНАЯ';$('heroHud').textContent=`${selectedHero().emoji} ${selectedHero().name}`;$('timerPill').style.display=timeAttackActive||isRingMode?'':'none';$('timer').textContent=Math.max(0,Math.ceil(timeAttackRemaining));$('timerPill').style.color=timeAttackRemaining<=10?(frame%12<6?'#ff646b':'#ffffff'):'';$('bossHUD').classList.toggle('show',isBossRound&&gameState==='playing');if(isBossRound){$('bossHUD').querySelector('.boss-title strong').textContent=`БОСС · ${bossName}`;$('bossLabel').textContent=`${bossHP} / ${bossMaxHP} HP`;$('bossFill').style.width=`${Math.max(0,bossHP/bossMaxHP*100)}%`}}
 
 // GENERATION
 function floodFill(startX,startY){const queue=[[startX,startY]],visited=new Set([cellKey(startX,startY)]);for(let i=0;i<queue.length;i++){const [x,y]=queue[i];for(const d of DIRECTIONS){const nx=x+d.x,ny=y+d.y,k=cellKey(nx,ny);const tile=grid[ny]?.[nx];if(!inside(nx,ny)||visited.has(k)||tile===1||tile===2||tile===3||tile===4||tile===5||tile===6)continue;visited.add(k);queue.push([nx,ny])}}return visited}
 function generateLevel(){
  if(!Array.isArray(grid))grid=[];
- const start={x:1,y:7};exit={x:13,y:1};hiddenExit=null;exitRevealed=false;activeHero=selectedHero();currentWallColor=['red','blue','green','purple'][Math.floor(Math.random()*4)];isBossRound=!timeAttackActive&&round%5===0;let valid=false;
+ const start={x:1,y:7};exit={x:13,y:1};hiddenExit=null;exitRevealed=false;activeHero=selectedHero();currentWallColor=['red','blue','green','purple'][Math.floor(Math.random()*4)];isBossRound=!timeAttackActive&&!isRingMode&&round%5===0;let valid=false;
  if(isBossRound){
   grid=Array.from({length:H},(_,y)=>Array.from({length:W},(_,x)=>x===0||y===0||x===W-1||y===H-1?1:0));
   for(const [x,y] of [[3,3],[11,3],[3,5],[11,5],[5,2],[9,6]])grid[y][x]=2;
   for(const [x,y] of [[1,7],[1,6],[2,7],[13,1],[12,1],[13,2]])grid[y][x]=0;
   blockHp.clear();for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(BLOCK_MAX_HP[grid[y][x]])blockHp.set(cellKey(x,y),BLOCK_MAX_HP[grid[y][x]]);
-  player={x:start.x,y:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:STEP_DELAY};
+  player={x:start.x,y:start.y,renderX:start.x,renderY:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
   const spec=bossSpec();bossName=spec.name;bossMaxHP=bossHealthForRound();bossHP=bossMaxHP;boss={x:7,y:4,moveTimer:1.5,roarTimer:3,type:spec.attack,color:spec.color,light:spec.light,dark:spec.dark,phase:0};crystals=[];goldItems=[];amberMinerals=[];hiddenLoot=new Map();bombs=[];enemies=[];particles=[];floaters=[];flames=[];acidPuddles=[];acidItems=[];heartItems=[];roundGoldBonus=0;slowTimeUsedRound=false;
   updateHUD();setNotice(`БОСС-РАУНД ${round}! ${bossName}: ${bossHP} HP. Используй бомбы и уклоняйся от атак.`);return;
  }
@@ -134,24 +392,36 @@ function generateLevel(){
    else grid[y][x]=2;
   }
   for(const [x,y] of [[1,7],[1,6],[2,7],[1,1],[2,1],[1,2],[13,1],[12,1],[13,2]])grid[y][x]=0;
-  const reachable=floodFill(start.x,start.y),available=[];
-  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===0&&reachable.has(cellKey(x,y))&&!(x===start.x&&y===start.y)&&!(x===exit.x&&y===exit.y))available.push({x,y});
   let shortestPath=Infinity;
-  const pathQueue=[[start.x,start.y]],visited=new Map([[cellKey(start.x,start.y),0]]);
-  while(pathQueue.length){
-   const [x,y]=pathQueue.shift();
-   if(x===exit.x&&y===exit.y){shortestPath=visited.get(cellKey(x,y)) ?? 0;break;}
-   for(const d of DIRECTIONS){
-    const nx=x+d.x,ny=y+d.y,key=cellKey(nx,ny);
-    if(!inside(nx,ny)||visited.has(key))continue;
-    const tile=grid[ny]?.[nx];
-    if(tile===1||tile===2||tile===3||tile===4||tile===5||tile===6)continue;
-    visited.set(key,(visited.get(cellKey(x,y)) ?? 0)+1);
-    pathQueue.push([nx,ny]);
+  if(!isRingMode){
+   const startKey=cellKey(start.x,start.y),exitKey=cellKey(exit.x,exit.y);
+   const pathDirections=[...DIRECTIONS];
+   for(let i=pathDirections.length-1;i>0;i--){const j=rand(i+1);[pathDirections[i],pathDirections[j]]=[pathDirections[j],pathDirections[i]]}
+   const pathQueue=[[start.x,start.y]],visited=new Map([[startKey,{distance:0,previous:null}]]);
+   while(pathQueue.length){
+    const [x,y]=pathQueue.shift();
+    if(x===exit.x&&y===exit.y)break;
+    for(const d of pathDirections){
+     const nx=x+d.x,ny=y+d.y,key=cellKey(nx,ny);
+     if(!inside(nx,ny)||visited.has(key))continue;
+     const tile=grid[ny]?.[nx];
+     if(tile===1)continue;
+     visited.set(key,{distance:visited.get(cellKey(x,y)).distance+1,previous:cellKey(x,y)});
+     pathQueue.push([nx,ny]);
+    }
+   }
+   if(visited.has(exitKey)){
+    shortestPath=visited.get(exitKey).distance;
+    for(let key=exitKey;key!==startKey;key=visited.get(key).previous){
+     const x=key%W,y=Math.floor(key/W);
+     grid[y][x]=0;
+    }
    }
   }
-  valid=reachable.has(cellKey(exit.x, exit.y))&&available.length>=GOAL&&shortestPath>=20;
-  if(valid){for(let i=available.length-1;i>0;i--){const j=rand(i+1);[available[i],available[j]]=[available[j],available[i]]}crystals=available.slice(0,Math.max(GOAL,Math.min(GOAL+Math.floor(round/3),available.length))).map(p=>({...p,taken:false,pulse:Math.random()*6}))}
+  const reachable=floodFill(start.x,start.y),available=[];
+  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===0&&reachable.has(cellKey(x,y))&&!(x===start.x&&y===start.y)&&!(x===exit.x&&y===exit.y))available.push({x,y});
+  valid=isRingMode?available.length>=11:reachable.has(cellKey(exit.x,exit.y))&&available.length>=GOAL&&shortestPath>=15;
+  if(valid){for(let i=available.length-1;i>0;i--){const j=rand(i+1);[available[i],available[j]]=[available[j],available[i]]}crystals=isRingMode?[]:available.slice(0,Math.max(GOAL,Math.min(GOAL+Math.floor(round/3),available.length))).map(p=>({...p,taken:false,pulse:Math.random()*6}))}
  }
  if(!valid){
   console.error('Не удалось сгенерировать уровень за 200 попыток. Используется безопасная резервная карта.');
@@ -162,10 +432,10 @@ function generateLevel(){
   for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===0&&!safe.some(([sx,sy])=>sx===x&&sy===y)&&Math.random()<0.70){
    const r=Math.random();grid[y][x]=r<.30?5:r<.55?3:r<.80?4:r<.90?6:2;
   }
-  crystals=[{x:3,y:7,taken:false,pulse:0},{x:5,y:7,taken:false,pulse:1},{x:7,y:7,taken:false,pulse:2},{x:11,y:3,taken:false,pulse:3},{x:13,y:3,taken:false,pulse:4}];valid=true;
+  crystals=isRingMode?[]:[{x:3,y:7,taken:false,pulse:0},{x:5,y:7,taken:false,pulse:1},{x:7,y:7,taken:false,pulse:2},{x:11,y:3,taken:false,pulse:3},{x:13,y:3,taken:false,pulse:4}];valid=true;
  }
  blockHp.clear();for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(BLOCK_MAX_HP[grid[y][x]])blockHp.set(cellKey(x,y),BLOCK_MAX_HP[grid[y][x]]);
- if(!isBossRound){
+ if(!isBossRound&&!isRingMode){
   const candidates=[];
   for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){
    if(![3,4,5,6].includes(grid[y][x])||crystals.some(c=>c.x===x&&c.y===y))continue;
@@ -183,12 +453,12 @@ function generateLevel(){
  // Диагностика генерации: предупреждаем, если карта неожиданно осталась без разрушаемых блоков.
  const destructibleCount=grid.flat().filter(t=>BLOCK_MAX_HP[t]).length;
  if(destructibleCount===0)console.warn('BLAST RUN: на уровне нет разрушаемых блоков; проверьте генерацию.');
- hiddenLoot=new Map();for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===2||grid[y][x]===3||grid[y][x]===4||grid[y][x]===5||grid[y][x]===6){const roll=Math.random();if(roll<.05)hiddenLoot.set(cellKey(x,y),'amber_mineral');else if(roll<.10)hiddenLoot.set(cellKey(x,y),'life');else if(roll<.15)hiddenLoot.set(cellKey(x,y),'acid');else if(roll<.45)hiddenLoot.set(cellKey(x,y),BONUS_TYPES[rand(BONUS_TYPES.length)])}
- player={x:start.x,y:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:STEP_DELAY};
- bombs=[];enemies=[];particles=[];floaters=[];flames=[];acidPuddles=[];acidItems=[];heartItems=[];goldItems=[];amberMinerals=[];roundGoldBonus=0;slowTimeUsedRound=false;spawnEnemies();updateHUD();
+ hiddenLoot=new Map();if(!isRingMode)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===2||grid[y][x]===3||grid[y][x]===4||grid[y][x]===5||grid[y][x]===6){const roll=Math.random();if(roll<.05)hiddenLoot.set(cellKey(x,y),'amber_mineral');else if(roll<.10)hiddenLoot.set(cellKey(x,y),'life');else if(roll<.15)hiddenLoot.set(cellKey(x,y),'acid');else if(roll<.45)hiddenLoot.set(cellKey(x,y),BONUS_TYPES[rand(BONUS_TYPES.length)])}
+ player={x:start.x,y:start.y,renderX:start.x,renderY:start.y,lives:player?.lives??3,invuln:0,walk:0,dir:{x:0,y:-1},stepDelay:isMobile ? .22 : STEP_DELAY};
+ bombs=[];coins=[];bot=null;enemies=[];particles=[];floaters=[];flames=[];acidPuddles=[];acidItems=[];heartItems=[];goldItems=[];amberMinerals=[];roundGoldBonus=0;slowTimeUsedRound=false;spawnEnemies();updateHUD();
 }
 function spawnEnemies(){
- if(isBossRound||round<3&&!timeAttackActive)return;const count=timeAttackActive?4:Math.min(2+Math.floor((round-3)/2),8),spots=[];
+ if(isRingMode||isBossRound||round<3&&!timeAttackActive)return;const count=timeAttackActive?4:Math.min(2+Math.floor((round-3)/2),8),spots=[];
  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===0&&Math.abs(x-player.x)+Math.abs(y-player.y)>5&&!(x===exit.x&&y===exit.y)&&!crystals.some(c=>c.x===x&&c.y===y))spots.push({x,y});
  for(let i=spots.length-1;i>0;i--){const j=rand(i+1);[spots[i],spots[j]]=[spots[j],spots[i]]}
  for(let i=0;i<Math.min(count,spots.length);i++){const type=round>=4&&!timeAttackActive&&Math.random()<.20?'ghost':i%4===3?'tank':i%3===1?'runner':'slime';enemies.push({...spots[i],type,hp:type==='tank'?3:1,moveTimer:Math.random()*.7})}
@@ -200,7 +470,7 @@ function movePlayer(dx,dy){
     if (gameState !== 'playing' || Math.abs(dx) + Math.abs(dy) !== 1) return false;
     const x = player.x + dx, y = player.y + dy;
     // Проверка на стену, бомбу и врага
-    if (!inside(x, y) || grid[y][x] !== 0 || hasBomb(x, y) || enemies.some(e => !e.dead && e.x === x && e.y === y)) return false;
+    if (!inside(x, y) || grid[y][x] !== 0 || hasBomb(x, y) || enemies.some(e => !e.dead && e.x === x && e.y === y) || isRingMode && bot && bot.x === x && bot.y === y) return false;
     
     // Двигаем игрока строго на 1 клетку
     player.x = x;
@@ -217,7 +487,7 @@ function bombAction(){
  if(standing){standing.carried=true;standing.paused=true;setNotice('Бомба поднята. Переместись и нажми пробел ещё раз.');updateHUD();return}
  const carried=bombs.find(b=>!b.dead&&b.carried&&b.owner==='player');
  if(carried){if(grid[player.y][player.x]!==0||hasBomb(player.x,player.y)){setNotice('На этой клетке нельзя поставить бомбу.');return}carried.x=player.x;carried.y=player.y;carried.carried=false;carried.paused=false;carried.t=fuseTime;setNotice('Бомба поставлена.');updateHUD();return}
- if(bombs.filter(b=>!b.dead).length>=save.stats.bombCap){setNotice('Все бомбы уже установлены!');return}
+ if(bombs.filter(b=>!b.dead&&(!isRingMode||b.owner==='player')).length>=save.stats.bombCap){setNotice('Все бомбы уже установлены!');return}
  if(grid[player.y][player.x]!==0||hasBomb(player.x,player.y)){setNotice('Здесь нельзя поставить бомбу.');return}
  bombs.push({x:player.x,y:player.y,t:fuseTime,owner:'player',dead:false,carried:false,paused:false,acid:hasAcidBomb,id:Math.random()});if(hasAcidBomb){hasAcidBomb=false;setNotice('Кислотная бомба установлена!')}updateHUD();
 }
@@ -227,25 +497,57 @@ function setDirection(key,down){if(down)keys.add(key);else keys.delete(key)}
 function shakeScreen(amount=7){shake=Math.min(14,shake+amount)}
 function burst(x,y,color='#ffad57',count=14){for(let i=0;i<count;i++){const angle=Math.random()*Math.PI*2,speed=45+Math.random()*210;particles.push({x:x*TILE+TILE/2,y:y*TILE+TILE/2,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,t:.35+Math.random()*.45,color,size:2+Math.random()*4})}}
 function floatText(x,y,text,color='#ffdc75'){floaters.push({x:x*TILE+TILE/2,y:y*TILE+TILE/2,text,color,t:1})}
-function blastCells(b,radius=save.stats.radius){const cells=[{x:b.x,y:b.y}];for(const d of DIRECTIONS)for(let i=1;i<=radius;i++){const x=b.x+d.x*i,y=b.y+d.y*i;if(x<0||x>=W||y<0||y>=H)break;const boundary=x===0||x===W-1||y===0||y===H-1;if(b.acid&&boundary)break;const t=grid[y][x];if(t===1&&!b.acid)break;cells.push({x,y});if(t===0)continue;if(t===2)continue;if([3,4,5,6].includes(t))break;break}return cells}
+function blastCells(b,radius=save.stats.radius){const cells=[{x:b.x,y:b.y}];for(const d of DIRECTIONS)for(let i=1;i<=radius;i++){const x=b.x+d.x*i,y=b.y+d.y*i;if(x<0||x>=W||y<0||y>=H)break;const boundary=x===0||x===W-1||y===0||y===H-1;if(b.acid&&boundary)break;const t=grid[y][x];if(t===1&&!b.acid)break;cells.push({x,y});if(t===0)continue;if(t===2&&!isRingMode)continue;break}return cells}
 function explodeBomb(initial,radius=save.stats.radius){
- const queue=[{bomb:initial,radius}],seen=new Set();let hitPlayer=false,changed=false,cratesDestroyed=0;
- while(queue.length){const {bomb,radius:blastRadius}=queue.shift();if(!bomb||bomb.dead||seen.has(bomb.id))continue;seen.add(bomb.id);bomb.dead=true;changed=true;resonanceMultiplier=seen.size;let bombHitBoss=false;const effectiveRadius=blastRadius+(activeHero?.radius||0)+(bomb.acid&&save.artifacts.includes('acid_master')?1:0);
+ const queue=[{bomb:initial,radius:initial.radius??radius}],seen=new Set();let hitPlayer=false,hitBot=false,changed=false,cratesDestroyed=0;const ringScoreBefore=score;
+ while(queue.length){const {bomb,radius:blastRadius}=queue.shift();if(!bomb||bomb.dead||seen.has(bomb.id))continue;seen.add(bomb.id);bomb.dead=true;changed=true;resonanceMultiplier=seen.size;let bombHitBoss=false;const effectiveRadius=blastRadius+(bomb.owner==='bot'?0:(activeHero?.radius||0))+(bomb.acid&&save.artifacts.includes('acid_master')?1:0);
   for(const cell of blastCells(bomb,effectiveRadius)){
    const {x,y}=cell;if(bomb.acid){try{if(x>=0&&x<W&&y>=0&&y<H){if(grid[y][x]===1)grid[y][x]=0;acidPuddles.push({x,y,t:3})}}catch(error){console.error('Ошибка обработки кислотной клетки:',{x,y,error});continue}}
-   flames.push({x,y,t:bomb.acid?3:.34,acid:!!bomb.acid});burst(x,y,bomb.acid?'#74ff80':'#ffad57');const other=bombs.find(q=>!q.dead&&!q.carried&&q.x===x&&q.y===y);if(other&&!seen.has(other.id))queue.push({bomb:other,radius:save.stats.radius});
-   if(x===player.x&&y===player.y&&!hitPlayer&&player.invuln<=0){hitPlayer=true;damagePlayer()}
+   flames.push({x,y,t:bomb.acid?3:.34,acid:!!bomb.acid});burst(x,y,bomb.acid?'#74ff80':'#ffad57');const other=bombs.find(q=>!q.dead&&!q.carried&&q.x===x&&q.y===y);if(other&&!seen.has(other.id))queue.push({bomb:other,radius:other.radius??save.stats.radius});
+   if(x===player.x&&y===player.y&&!hitPlayer&&player.invuln<=0){if(isRingMode)hitPlayer=true;else{hitPlayer=true;damagePlayer()}}
+   if(isRingMode&&bot&&x===bot.x&&y===bot.y&&bot.invuln<=0)hitBot=true;
    if(isBossRound&&boss&&!bomb.acid&&x>=boss.x-1&&x<=boss.x+1&&y>=boss.y-1&&y<=boss.y+1&&!bombHitBoss){bossHP=Math.max(0,bossHP-1);bombHitBoss=true;floatText(boss.x,boss.y,'-1 БОСС','#ff9bd1');if(bossHP===0){boss=null;score+=1000;floatText(7,4,`${bossName} ПОВЕРЖЕН +1000`,'#ffe083')}}
-   const enemy=enemies.find(e=>!e.dead&&e.x===x&&e.y===y);if(enemy){enemy.hp--;if(enemy.hp<=0){enemy.dead=true;playSound(300,.2,'square',.1);score+=100*resonanceMultiplier;floatText(x,y,`+${100*resonanceMultiplier}`,'#ffdc75');for(let i=0;i<5;i++){const angle=Math.PI*2*i/5,speed=50+Math.random()*90;particles.push({x:x*TILE+32,y:y*TILE+32,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,t:.4+Math.random()*.25,color:'#ff9a7a',size:3+Math.random()*3})}}}
-   const blockType=grid[y]?.[x];if(blockType===0)continue;if(BLOCK_MAX_HP[blockType]){console.log(`[DEBUG] Взрыв в (${x},${y}): тип=${blockType}, HP до=${getBlockHpAt(x,y)}`);const blockBroken=damageBlockAt(x,y,1);console.log(`[DEBUG] HP после=${getBlockHpAt(x,y)}`);if(blockBroken){cratesDestroyed++;score+=10*resonanceMultiplier;if(grid[y][x]===0&&hiddenExit?.x===x&&hiddenExit?.y===y){exit={x,y};exitRevealed=true}const key=cellKey(x,y),loot=hiddenLoot.get(key);if(grid[y][x]===0)hiddenLoot.delete(key);if(loot&&grid[y][x]===0)dropBonus(x,y,loot)}}
+   const enemy=enemies.find(e=>!e.dead&&e.x===x&&e.y===y);if(enemy){enemy.hp--;if(enemy.hp<=0){enemy.dead=true;playSound(300,.2,'square',.1);if(!isRingMode)score+=100*resonanceMultiplier;floatText(x,y,`+${100*resonanceMultiplier}`,'#ffdc75');for(let i=0;i<5;i++){const angle=Math.PI*2*i/5,speed=50+Math.random()*90;particles.push({x:x*TILE+32,y:y*TILE+32,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,t:.4+Math.random()*.25,color:'#ff9a7a',size:3+Math.random()*3})}}}
+   const blockType=grid[y]?.[x];if(blockType===0)continue;if(BLOCK_MAX_HP[blockType]){console.log(`[DEBUG] Взрыв в (${x},${y}): тип=${blockType}, HP до=${getBlockHpAt(x,y)}`);const blockBroken=damageBlockAt(x,y,1);console.log(`[DEBUG] HP после=${getBlockHpAt(x,y)}`);if(blockBroken){cratesDestroyed++;if(!isRingMode)score+=10*resonanceMultiplier;if(grid[y][x]===0&&hiddenExit?.x===x&&hiddenExit?.y===y){exit={x,y};exitRevealed=true}const key=cellKey(x,y),loot=hiddenLoot.get(key);if(grid[y][x]===0)hiddenLoot.delete(key);if(loot&&grid[y][x]===0)dropBonus(x,y,loot)}}
   }
  }
- resonanceMultiplier=seen.size;if(changed){const chainCount=seen.size;if(chainCount>1)floatText(initial.x,initial.y,`RESONANCE x${chainCount}`,'#78f4ff');playSound(80,.4,'sawtooth',.2);playSound(400,.1,'square',.15);playExplosionNoise();if(cratesDestroyed>=5){score+=500;screenFlash=.1;shakeScreen(14);playSound(125,.4,'sawtooth',.16);floatText(initial.x,initial.y,'MEGA-ВЗРЫВ +500','#ffffff')}else shakeScreen(7);enemies=enemies.filter(e=>!e.dead);updateHUD()}
+ resonanceMultiplier=seen.size;if(isRingMode&&(hitPlayer||hitBot))damageRingParticipants(hitPlayer,hitBot);if(changed){const chainCount=seen.size;if(chainCount>1)floatText(initial.x,initial.y,`RESONANCE x${chainCount}`,'#78f4ff');playSound(80,.4,'sawtooth',.2);playSound(400,.1,'square',.15);playExplosionNoise();if(cratesDestroyed>=5){if(!isRingMode)score+=500;screenFlash=.1;shakeScreen(14);playSound(125,.4,'sawtooth',.16);floatText(initial.x,initial.y,isRingMode?'MEGA-ВЗРЫВ':'MEGA-ВЗРЫВ +500','#ffffff')}else shakeScreen(7);enemies=enemies.filter(e=>!e.dead);updateHUD()}if(isRingMode)score=ringScoreBefore;
 }
-function damagePlayer(source='explosion'){if(player.invuln>0)return;const reduction=source==='enemy'&&activeHero&&activeHero.id==='ninja' ? 0.8 : 1;player.lives=Math.max(0,player.lives-reduction);player.invuln=1.1;shakeScreen(10);playSound(400,.3,'square',.1);floatText(player.x,player.y,source==='enemy'&&reduction<1?'-0.8 ♥':'-1 ♥','#ff6666');if(player.lives<=0&&save.artifacts.includes('phoenix_feather')&&!phoenixUsed){player.lives=3;player.invuln=2;phoenixUsed=true;setNotice('Перо Феникса оживило тебя! Возрождение на месте с 3 жизнями.');floatText(player.x,player.y,'ВОЗРОЖДЕНИЕ!','#ffd980');playSound(440,.26,'sine',.08);updateHUD();return}if(player.lives<=0&&save.artifacts.includes('slow_time')&&!slowTimeUsedRound){player.lives=1;player.invuln=2;slowTimeRemaining=2;slowTimeUsedRound=true;setNotice('Часы спасли тебя! Время замедлено на 2 секунды.')}else if(player.lives<=0){deathGhost={x:player.x,y:player.y,heroId:activeHero?.id||'neo',t:1};deathTimer=1;gameState='dying';keys.clear();setNotice('Герой повержен...')}else setNotice(`Попадание! Осталось жизней: ${Math.ceil(player.lives)}.`);updateHUD()}
+function damagePlayer(source='explosion'){if(isRingMode||player.invuln>0)return;const reduction=source==='enemy'&&activeHero&&activeHero.id==='ninja' ? 0.8 : 1;player.lives=Math.max(0,player.lives-reduction);player.invuln=1.1;shakeScreen(10);playSound(400,.3,'square',.1);floatText(player.x,player.y,source==='enemy'&&reduction<1?'-0.8 ♥':'-1 ♥','#ff6666');if(player.lives<=0&&save.artifacts.includes('phoenix_feather')&&!phoenixUsed){player.lives=3;player.invuln=2;phoenixUsed=true;setNotice('Перо Феникса оживило тебя! Возрождение на месте с 3 жизнями.');floatText(player.x,player.y,'ВОЗРОЖДЕНИЕ!','#ffd980');playSound(440,.26,'sine',.08);updateHUD();return}if(player.lives<=0&&save.artifacts.includes('slow_time')&&!slowTimeUsedRound){player.lives=1;player.invuln=2;slowTimeRemaining=2;slowTimeUsedRound=true;setNotice('Часы спасли тебя! Время замедлено на 2 секунды.')}else if(player.lives<=0){deathGhost={x:player.x,y:player.y,heroId:activeHero?.id||'neo',t:1};deathTimer=1;gameState='dying';keys.clear();setNotice('Герой повержен...')}else setNotice(`Попадание! Осталось жизней: ${Math.ceil(player.lives)}.`);updateHUD()}
 function detonateTrap(x,y){floatText(x,y,'ЛОВУШКА!','#ff6388');playSound(120,.2,'square');for(const cell of [{x,y},...DIRECTIONS.map(d=>({x:x+d.x,y:y+d.y}))]){if(!inside(cell.x,cell.y)||grid[cell.y][cell.x]===1)continue;flames.push({x:cell.x,y:cell.y,t:.4});burst(cell.x,cell.y,'#ff577b',10);if(cell.x===player.x&&cell.y===player.y)damagePlayer();const enemy=enemies.find(e=>!e.dead&&e.x===cell.x&&e.y===cell.y);if(enemy&&--enemy.hp<=0){enemy.dead=true;score+=100}if(grid[cell.y][cell.x]===2||grid[cell.y][cell.x]===3||grid[cell.y][cell.x]===4||grid[cell.y][cell.x]===5||grid[cell.y][cell.x]===6){if(grid[cell.y][cell.x]===3){grid[cell.y][cell.x]=4}else if(grid[cell.y][cell.x]===4){grid[cell.y][cell.x]=2}else{grid[cell.y][cell.x]=0}if(grid[cell.y][cell.x]===0&&hiddenExit?.x===cell.x&&hiddenExit?.y===cell.y){exit={x:cell.x,y:cell.y};exitRevealed=true}const loot=hiddenLoot.get(cellKey(cell.x,cell.y));hiddenLoot.delete(cellKey(cell.x,cell.y));if(loot)dropBonus(cell.x,cell.y,loot)}}shakeScreen(6)}
 function dropBonus(x,y,type){if(type==='life'){heartItems.push({x,y,pulse:Math.random()*6});setNotice('Сердце жизни выпало из ящика!')}else if(type==='acid'){acidItems.push({x,y,pulse:Math.random()*6});setNotice('Найдена кислотная бомба — подбери её!')}else if(type==='gold'){goldItems.push({x,y,pulse:Math.random()*6});setNotice('Золото выпало из ящика!')}else if(type==='bomb'){save.stats.bombCap++;persist();floatText(x,y,'БОМБА +1','#8beaff');playSound(520,.12,'sine')}else if(type==='speed'){save.stats.speed=Math.min(2,+(save.stats.speed*1.1).toFixed(2));persist();floatText(x,y,'СКОРОСТЬ +10%','#ffe37a');playSound(640,.12,'sine')}else if(type==='trap'){floatText(x,y,'ЛОВУШКА!','#ff7690');detonateTrap(x,y)}else if(type==='magnet'){for(const c of crystals)if(!c.taken){c.taken=true;score+=25;floatText(c.x,c.y,'+25','#ffe083');burst(c.x,c.y,'#ffe083',6)}setNotice('Магнит собрал все кристаллы!');playSound(820,.2,'sine')}else if(type==='amber_mineral'){amberMinerals.push({x,y,pulse:Math.random()*6});setNotice('Янтарный минерал найден!');floatText(x,y,'ЯНТАРЬ +1','#ffb84d');playSound(730,.12,'sine')}updateHUD()}
-function collectAtPlayer(){const pickupRadius=save.artifacts.includes('magnet')?2:0,withinPickupRange=(x,y)=>Math.abs(x-player.x)+Math.abs(y-player.y)<=pickupRadius;for(const c of crystals)if(!c.taken&&withinPickupRange(c.x,c.y)){c.taken=true;score+=25;floatText(c.x,c.y,'+25','#ffe083');burst(c.x,c.y,'#62f5ee',8);playSound(1600,.15,'sine',.15)}for(let i=goldItems.length-1;i>=0;i--)if(withinPickupRange(goldItems[i].x,goldItems[i].y)){const item=goldItems.splice(i,1)[0];const goldGain=save.artifacts.includes('midas_touch')?20:10;if(timeAttackActive){save.gold+=goldGain;persist()}else roundGoldBonus+=goldGain;score+=goldGain;floatText(item.x,item.y,'+ЗОЛОТО','#ffd76a');burst(item.x,item.y,'#ffd34e',9);playSound(740,.12,'sine')}for(let i=amberMinerals.length-1;i>=0;i--)if(amberMinerals[i].x===player.x&&amberMinerals[i].y===player.y){amberMinerals.splice(i,1);save.amber+=1;persist();floatText(player.x,player.y,'+1 ЯНТАРЬ','#ffb84d');burst(player.x,player.y,'#ffb84d',8);playSound(900,.12,'sine');setNotice('Янтарный минерал собран!')}for(let i=acidItems.length-1;i>=0;i--)if(acidItems[i].x===player.x&&acidItems[i].y===player.y){acidItems.splice(i,1);hasAcidBomb=true;floatText(player.x,player.y,'КИСЛОТНАЯ БОМБА','#8dff8d');setNotice('Кислотный заряд готов — следующая бомба прожжёт стены!');playSound(540,.2,'sine')}for(let i=heartItems.length-1;i>=0;i--)if(heartItems[i].x===player.x&&heartItems[i].y===player.y){heartItems.splice(i,1);player.lives=Math.min(9,player.lives+1);floatText(player.x,player.y,'+1 ЖИЗНЬ','#ff89b4');setNotice(`Подобрано сердце! Жизней: ${Math.ceil(player.lives)}.`);playSound(680,.18,'sine')}const count=crystals.filter(c=>c.taken).length;if(count>=GOAL&&!isBossRound)setNotice('Все кристаллы собраны — найди выход!');updateHUD()}
+function collectAtPlayer(){if(isRingMode){collectRingCoin(player.x,player.y,false);return}const pickupRadius=save.artifacts.includes('magnet')?2:0,withinPickupRange=(x,y)=>Math.abs(x-player.x)+Math.abs(y-player.y)<=pickupRadius;for(const c of crystals)if(!c.taken&&withinPickupRange(c.x,c.y)){c.taken=true;score+=25;floatText(c.x,c.y,'+25','#ffe083');burst(c.x,c.y,'#62f5ee',8);playSound(1600,.15,'sine',.15)}for(let i=goldItems.length-1;i>=0;i--)if(withinPickupRange(goldItems[i].x,goldItems[i].y)){const item=goldItems.splice(i,1)[0];const goldGain=save.artifacts.includes('midas_touch')?20:10;if(timeAttackActive){save.gold+=goldGain;persist()}else roundGoldBonus+=goldGain;score+=goldGain;floatText(item.x,item.y,'+ЗОЛОТО','#ffd76a');burst(item.x,item.y,'#ffd34e',9);playSound(740,.12,'sine')}for(let i=amberMinerals.length-1;i>=0;i--)if(amberMinerals[i].x===player.x&&amberMinerals[i].y===player.y){amberMinerals.splice(i,1);save.amber+=1;persist();floatText(player.x,player.y,'+1 ЯНТАРЬ','#ffb84d');burst(player.x,player.y,'#ffb84d',8);playSound(900,.12,'sine');setNotice('Янтарный минерал собран!')}for(let i=acidItems.length-1;i>=0;i--)if(acidItems[i].x===player.x&&acidItems[i].y===player.y){acidItems.splice(i,1);hasAcidBomb=true;floatText(player.x,player.y,'КИСЛОТНАЯ БОМБА','#8dff8d');setNotice('Кислотный заряд готов — следующая бомба прожжёт стены!');playSound(540,.2,'sine')}for(let i=heartItems.length-1;i>=0;i--)if(heartItems[i].x===player.x&&heartItems[i].y===player.y){heartItems.splice(i,1);player.lives=Math.min(9,player.lives+1);floatText(player.x,player.y,'+1 ЖИЗНЬ','#ff89b4');setNotice(`Подобрано сердце! Жизней: ${Math.ceil(player.lives)}.`);playSound(680,.18,'sine')}const count=crystals.filter(c=>c.taken).length;if(count>=GOAL&&!isBossRound)setNotice('Все кристаллы собраны — найди выход!');updateHUD()}
+
+function collectRingCoin(x,y,isBot){const index=coins.findIndex(coin=>coin.x===x&&coin.y===y);if(index<0)return;coins.splice(index,1);if(isBot)bot.coins++;else score++;floatText(x,y,isBot?'БОТ +1':'МОНЕТА +1',isBot?'#ff2c78':'#ffd76a');burst(x,y,isBot?'#ff2c78':'#ffd34e',9);playSound(740,.12,'sine');updateHUD()}
+function finishRingMode(outcome){if(!isRingMode||gameState!=='playing')return;gameState='over';const result=outcome||(score>(bot?.coins||0)?'ПОБЕДА В РИНГЕ!':score<(bot?.coins||0)?'ПОРАЖЕНИЕ...':'НИЧЬЯ');showGameOver(result);updateHUD()}
+function damageRingParticipants(hitPlayer,hitBot){if(hitPlayer&&player.lives>0){player.lives=Math.max(0,player.lives-1);player.invuln=.8;floatText(player.x,player.y,'-1 ♥','#ff6666')}if(hitBot&&bot.lives>0){bot.lives=Math.max(0,bot.lives-1);bot.invuln=.8;floatText(bot.x,bot.y,'-1 ♥','#ff6666')}updateHUD();if(player.lives<=0||bot.lives<=0){if(player.lives<=0&&bot.lives<=0)finishRingMode('НИЧЬЯ · ОБА БОЙЦА ПОВЕРЖЕНЫ');else if(player.lives<=0)finishRingMode('ПОРАЖЕНИЕ...');else finishRingMode('ПОБЕДА В РИНГЕ!')}}
+const RING_BOT_STEP=.2;
+function ringCanWalk(x,y){return inside(x,y)&&x>0&&x<W-1&&y>0&&y<H-1&&grid[y][x]===0&&!hasBomb(x,y)&&!flames.some(flame=>flame.x===x&&flame.y===y)&&!(x===player.x&&y===player.y)}
+function ringPathTo(startX,startY,isGoal,blocked=new Set()){const start=cellKey(startX,startY),queue=[{x:startX,y:startY}],parents=new Map([[start,null]]);let target=null;for(let i=0;i<queue.length;i++){const cell=queue[i],key=cellKey(cell.x,cell.y);if(isGoal(cell)){target=key;break}for(const direction of DIRECTIONS){const x=cell.x+direction.x,y=cell.y+direction.y,next=cellKey(x,y);if(parents.has(next)||blocked.has(next)||!ringCanWalk(x,y))continue;parents.set(next,key);queue.push({x,y})}}if(target===null)return null;const path=[];for(let key=target;key!==start;key=parents.get(key))path.push({x:key%W,y:Math.floor(key/W)});path.reverse();return path}
+function ringThreats(extraBomb=null){const danger=new Set(),immediateFire=new Set(),bombZones=[];for(const flame of flames){const key=cellKey(flame.x,flame.y);danger.add(key);immediateFire.add(key)}for(const bomb of [...bombs,...(extraBomb?[extraBomb]:[])]){if(bomb.dead||bomb.carried)continue;const radius=bomb.radius??(bomb.owner==='bot'?3:save.stats.radius+(activeHero?.radius||0)),cells=blastCells(bomb,radius),zone={cells,fuse:Math.max(0,bomb.t)};bombZones.push(zone);for(const cell of cells)danger.add(cellKey(cell.x,cell.y))}return {danger,immediateFire,bombZones}}
+function ringEscapePath(danger,immediateFire,bombZones,extraBlocked=new Set()){const start=cellKey(bot.x,bot.y),queue=[{x:bot.x,y:bot.y}],parents=new Map([[start,null]]),distance=new Map([[start,0]]);for(let i=0;i<queue.length;i++){const cell=queue[i],key=cellKey(cell.x,cell.y);for(const direction of DIRECTIONS){const x=cell.x+direction.x,y=cell.y+direction.y,next=cellKey(x,y);if(parents.has(next)||extraBlocked.has(next)||immediateFire.has(next)||!ringCanWalk(x,y))continue;parents.set(next,key);distance.set(next,distance.get(key)+1);queue.push({x,y})}}let best=null;for(const cell of queue){const key=cellKey(cell.x,cell.y),steps=distance.get(key);if(steps===0||danger.has(key))continue;const path=[];for(let cursor=key;cursor!==start;cursor=parents.get(cursor))path.push({x:cursor%W,y:Math.floor(cursor/W)});path.reverse();let safe=true;for(let i=0;i<path.length&&safe;i++){const arrival=(i+1)*RING_BOT_STEP;for(const zone of bombZones){if(zone.cells.some(point=>cellKey(point.x,point.y)===cellKey(path[i].x,path[i].y))&&arrival<=zone.fuse+.4&&arrival+RING_BOT_STEP>=zone.fuse){safe=false;break}}}if(!safe)continue;let clearance=Infinity;for(const hot of danger)clearance=Math.min(clearance,Math.abs(cell.x-hot%W)+Math.abs(cell.y-Math.floor(hot/W)));const value=steps-clearance*.08;if(!best||value<best.value)best={path,value}}return best?.path||null}
+function ringEmergencyStep(danger,immediateFire){let best=null;for(const direction of DIRECTIONS){const x=bot.x+direction.x,y=bot.y+direction.y,key=cellKey(x,y);if(!ringCanWalk(x,y)||immediateFire.has(key))continue;let threat= danger.has(key)?100:0;for(const hot of danger)threat+=Math.max(0,4-(Math.abs(x-hot%W)+Math.abs(y-Math.floor(hot/W))));if(!best||threat<best.threat)best={x,y,threat}}return best}
+function ringMoveBot(next){if(!next)return false;bot.dir={x:next.x-bot.x,y:next.y-bot.y};bot.x=next.x;bot.y=next.y;bot.walk=(bot.walk||0)+1;bot.animTimer=.24;bot.moveTimer=RING_BOT_STEP;collectRingCoin(bot.x,bot.y,true);return true}
+function ringPlantBotBomb(){if(!bot||bot.bombCooldown>0||bombs.some(b=>!b.dead&&b.owner==='bot')||grid[bot.y]?.[bot.x]!==0||hasBomb(bot.x,bot.y)||bot.x===player.x&&bot.y===player.y)return false;const bomb={x:bot.x,y:bot.y,t:2.2,owner:'bot',dead:false,carried:false,paused:false,acid:false,id:Math.random(),radius:3},threat=ringThreats(bomb),escape=ringEscapePath(threat.danger,threat.immediateFire,threat.bombZones,new Set([cellKey(bot.x,bot.y)]));if(!escape?.length)return false;bombs.push(bomb);bot.bombCooldown=.8;ringMoveBot(escape[0]);updateHUD();return true}
+function ringFindBlockPlan(paths,targetCoins){let best=null;for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){if(!BLOCK_MAX_HP[grid[y][x]])continue;for(const direction of DIRECTIONS){const sx=x+direction.x,sy=y+direction.y,path=paths(sx,sy);if(!path)continue;const line=blastCells({x:sx,y:sy,acid:false},3);if(!line.some(cell=>cell.x===x&&cell.y===y))continue;const coinDistance=targetCoins.length?Math.min(...targetCoins.map(coin=>Math.abs(coin.x-x)+Math.abs(coin.y-y))):0,cost=path.length+coinDistance*.4;if(!best||cost<best.cost)best={x:sx,y:sy,path,block:{x,y},cost}}}return best}
+function updateRingBot(dt){
+ if(!isRingMode||!bot||gameState!=='playing')return;
+ bot.bombCooldown=Math.max(0,(bot.bombCooldown||0)-dt);bot.invuln=Math.max(0,(bot.invuln||0)-dt);bot.moveTimer=Math.max(0,(bot.moveTimer||0)-dt);bot.animTimer=Math.max(0,(bot.animTimer||0)-dt);
+ const threat=ringThreats(),{danger,immediateFire,bombZones}=threat,botKey=cellKey(bot.x,bot.y),playerDistance=Math.abs(player.x-bot.x)+Math.abs(player.y-bot.y);
+ if(danger.has(botKey)){
+  if(bot.moveTimer<=0){const escape=ringEscapePath(danger,immediateFire,bombZones);if(escape?.length)ringMoveBot(escape[0]);else ringMoveBot(ringEmergencyStep(danger,immediateFire))}
+  return;
+ }
+ if(bot.moveTimer>0)return;
+ const ownBomb=bombs.some(b=>!b.dead&&b.owner==='bot'),pathFor=(x,y)=>ringPathTo(bot.x,bot.y,cell=>cell.x===x&&cell.y===y,danger),openCoins=coins.filter(coin=>!hasBomb(coin.x,coin.y));
+ if(playerDistance<=2&&blastCells({x:bot.x,y:bot.y,acid:false},3).some(cell=>cell.x===player.x&&cell.y===player.y)&&!ownBomb&&ringPlantBotBomb())return;
+ if(playerDistance<=2&&!ownBomb){const attackPath=ringPathTo(bot.x,bot.y,cell=>Math.abs(cell.x-player.x)+Math.abs(cell.y-player.y)<=2&&blastCells({x:cell.x,y:cell.y,acid:false},3).some(cell=>cell.x===player.x&&cell.y===player.y),danger);if(attackPath?.length){ringMoveBot(attackPath[0]);return}}
+ let nearest=null;for(const coin of openCoins){const path=pathFor(coin.x,coin.y);if(path&&(!nearest||path.length<nearest.length))nearest=path}
+ if(nearest?.length){ringMoveBot(nearest[0]);return}
+ if(!ownBomb&&bot.bombCooldown<=0){const blockedCoins=openCoins.filter(coin=>!pathFor(coin.x,coin.y)),plan=ringFindBlockPlan(pathFor,blockedCoins);if(plan){if(plan.path.length){ringMoveBot(plan.path[0]);return}if(ringPlantBotBomb())return}}
+ const patrol=DIRECTIONS.map(direction=>({x:bot.x+direction.x,y:bot.y+direction.y})).filter(cell=>!danger.has(cellKey(cell.x,cell.y))&&ringCanWalk(cell.x,cell.y));if(patrol.length){ringMoveBot(patrol[rand(patrol.length)]);return}
+ bot.moveTimer=RING_BOT_STEP;
+}
 
 // UPDATE
 function update(dt){
@@ -255,6 +557,7 @@ function update(dt){
  frame++;if(gameState==='dying'){deathTimer=Math.max(0,deathTimer-dt);if(deathGhost)deathGhost.t=deathTimer;if(deathTimer<=0)gameOver('ЗАПАС ЖИЗНЕЙ ИСЧЕРПАН');for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.t-=dt}particles=particles.filter(p=>p.t>0);return}if(gameState!=='playing')return;
  const realDt=dt;if(slowTimeRemaining>0){slowTimeRemaining=Math.max(0,slowTimeRemaining-realDt);dt*=.35}
  if(timeAttackActive){timeAttackRemaining=Math.max(0,timeAttackRemaining-dt);if(timeAttackRemaining<=0){finishTimeAttack();return}taSpawnTimer-=dt;if(taSpawnTimer<=0){taSpawnTimer=8;spawnTimeAttackWave()}}
+ if(isRingMode){timeAttackRemaining=Math.max(0,timeAttackRemaining-dt);if(timeAttackRemaining<=0){finishRingMode();return}}
  if(player.invuln>0)player.invuln=Math.max(0,player.invuln-dt);
  stepTimer-=dt;
  const direction=currentDirection();
@@ -263,9 +566,12 @@ function update(dt){
   if(movePlayer(direction.x,direction.y)){
    particles.push({x:oldX*TILE+TILE/2,y:oldY*TILE+TILE/2,vx:0,vy:0,t:.3,color:'rgba(100,232,239,.4)',size:9});
   }
-  stepTimer=STEP_DELAY/Math.min(2,save.stats.speed*(activeHero?.speed||1));
+  stepTimer=(isMobile ? .22 : STEP_DELAY)/Math.min(2,save.stats.speed*(activeHero?.speed||1));
  }
- collectAtPlayer();
+ const lerpSpeed=isMobile?10:20,lerpFactor=Math.min(1,lerpSpeed*dt);
+ player.renderX+=(player.x-player.renderX)*lerpFactor;
+ player.renderY+=(player.y-player.renderY)*lerpFactor;
+ collectAtPlayer();if(isRingMode){collectRingCoin(player.x,player.y,false);updateRingBot(dt);if(gameState!=='playing')return}
  for(const b of [...bombs])if(!b.dead&&!b.carried){b.t-=dt;if(b.t<=0)explodeBomb(b)}
  bombs=bombs.filter(b=>!b.dead);
  for(const e of enemies){if(e.dead)continue;e.moveTimer-=dt;if(e.moveTimer>0)continue;e.moveTimer=e.type==='tank'?.95:e.type==='runner'?.32:.58;
@@ -304,14 +610,15 @@ function drawHeroSprite(px,py,heroId,walk=0,alpha=1,facingLeft=false){
  const spriteKey='hero_'+heroId+'_'+frame;
  const sprite=sprites[spriteKey];
  if(sprite&&sprite.complete&&sprite.naturalWidth>0){
+  const spriteSize=isMobile?80:64,spriteLeft=isMobile?-40:-32,spriteTop=isMobile?-56:-48;
   ctx.save();
   ctx.globalAlpha=alpha;
   if(facingLeft){
    ctx.translate(px,py+bob);
    ctx.scale(-1,1);
-   ctx.drawImage(sprite,-32,-48,64,64);
+   ctx.drawImage(sprite,spriteLeft,spriteTop,spriteSize,spriteSize);
   }else{
-   ctx.drawImage(sprite,px-32,py-48+bob,64,64);
+   ctx.drawImage(sprite,px+spriteLeft,py+spriteTop+bob,spriteSize,spriteSize);
   }
   ctx.restore();
   return;
@@ -333,7 +640,7 @@ function draw(){
   if(player){
    const viewWidth=canvas.width/camera.zoom,viewHeight=canvas.height/camera.zoom;
    const mapWidth=W*TILE,mapHeight=H*TILE,halfViewWidth=viewWidth/2,halfViewHeight=viewHeight/2;
-   const playerCenterX=player.x*TILE+TILE/2,playerCenterY=player.y*TILE+TILE/2;
+   const playerCenterX=player.renderX*TILE+TILE/2,playerCenterY=player.renderY*TILE+TILE/2;
    camera.x=mapWidth<=viewWidth?mapWidth/2:Math.max(halfViewWidth,Math.min(mapWidth-halfViewWidth,playerCenterX));
    camera.y=mapHeight<=viewHeight?mapHeight/2:Math.max(halfViewHeight,Math.min(mapHeight-halfViewHeight,playerCenterY));
    ctx.translate(canvas.width/2,canvas.height/2);
@@ -375,13 +682,14 @@ function draw(){
   ctx.restore();
  }
  for(const p of acidPuddles){ctx.save();ctx.globalAlpha=Math.min(.48,p.t/3*.48);ctx.shadowBlur=12;ctx.shadowColor='#65ff75';ctx.fillStyle='#39d94e';ctx.beginPath();ctx.ellipse(p.x*TILE+32,p.y*TILE+34,23+Math.sin(frame*.08+p.x)*3,12,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#bcff9c';for(let i=0;i<3;i++){const bx=p.x*TILE+18+(i*13),by=p.y*TILE+28+Math.sin(frame*.09+i+p.y)*5;ctx.beginPath();ctx.arc(bx,by,2+i%2,0,Math.PI*2);ctx.fill()}ctx.restore()}
- if(!hiddenExit||exitRevealed){const exitOpen=isBossRound?bossHP<=0:crystals.filter(c=>c.taken).length>=GOAL,ex=exit.x*TILE+32,ey=exit.y*TILE+32;ctx.save();const exitKey=exitOpen?'ui_exit_open':'ui_exit_locked';if(drawSprite(exitKey,ex-20,ey-20,40,40,0)){ }else{ctx.shadowBlur=18;ctx.shadowColor=exitOpen?theme.accent:'#41516a';ctx.strokeStyle=exitOpen?theme.accent:'#52647c';ctx.lineWidth=4;ctx.beginPath();ctx.arc(ex,ey,20+Math.sin(frame*.08)*2,0,Math.PI*2);ctx.stroke();ctx.fillStyle=exitOpen?'#bafcff':'#364354';ctx.font='bold 20px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('↗',ex,ey)}ctx.restore()}
+ if(!isRingMode&&(!hiddenExit||exitRevealed)){const exitOpen=isBossRound?bossHP<=0:crystals.filter(c=>c.taken).length>=GOAL,ex=exit.x*TILE+32,ey=exit.y*TILE+32;ctx.save();const exitKey=exitOpen?'ui_exit_open':'ui_exit_locked';if(drawSprite(exitKey,ex-20,ey-20,40,40,0)){ }else{ctx.shadowBlur=18;ctx.shadowColor=exitOpen?theme.accent:'#41516a';ctx.strokeStyle=exitOpen?theme.accent:'#52647c';ctx.lineWidth=4;ctx.beginPath();ctx.arc(ex,ey,20+Math.sin(frame*.08)*2,0,Math.PI*2);ctx.stroke();ctx.fillStyle=exitOpen?'#bafcff':'#364354';ctx.font='bold 20px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('↗',ex,ey)}ctx.restore()}
  for(const c of crystals)if(!c.taken){const x=c.x*TILE+32,y=c.y*TILE+32+Math.sin(frame*.08+c.pulse)*3;const spriteKey='item_crystal_cyan';if(drawSprite(spriteKey,x-16,y-16,32,32,0)){ }else{ctx.save();ctx.translate(x,y);ctx.rotate(Math.PI/4);ctx.shadowBlur=15;ctx.shadowColor='#69f2ff';ctx.fillStyle='#64eaff';ctx.fillRect(-8,-8,16,16);ctx.fillStyle='#d9ffff';ctx.fillRect(-4,-4,6,6);ctx.restore()}}
  for(const g of goldItems){const x=g.x*TILE+32,y=g.y*TILE+32+Math.sin(frame*.08+g.pulse)*3;if(drawSprite('item_gold_coin',x-12,y-12,24,24,0)){ }else{ctx.save();ctx.shadowBlur=16;ctx.shadowColor='#ffc857';ctx.fillStyle='#ffd66b';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9b6818';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('₲',x,y);ctx.restore()}}
+ for(const coin of coins){const x=coin.x*TILE+32,y=coin.y*TILE+32+Math.sin(frame*.08+coin.pulse)*3;if(drawSprite('item_gold_coin',x-14,y-14,28,28,0)){ }else{ctx.save();ctx.shadowBlur=18;ctx.shadowColor='#ffc857';ctx.fillStyle='#ffd66b';ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9b6818';ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('₲',x,y);ctx.restore()}}
  for(const m of amberMinerals){const x=m.x*TILE+32,y=m.y*TILE+32+Math.sin(frame*.08+m.pulse)*3;if(drawSprite('item_amber',x-14,y-14,28,28,0)){ }else{ctx.save();ctx.translate(x,y);ctx.rotate(Math.PI/4);ctx.shadowBlur=22;ctx.shadowColor='#ffb84d';ctx.fillStyle='#ffb84d';ctx.fillRect(-10,-10,20,20);ctx.fillStyle='#ffe4a3';ctx.fillRect(-5,-5,10,10);ctx.restore()}}
  for(const a of acidItems){const x=a.x*TILE+32,y=a.y*TILE+32+Math.sin(frame*.09+a.pulse)*3;if(drawSprite('item_acid_bomb',x-14,y-14,28,28,0)){ }else{ctx.save();ctx.shadowBlur=18;ctx.shadowColor='#67ff58';ctx.fillStyle='#a1ff60';ctx.beginPath();ctx.moveTo(x,y-12);ctx.lineTo(x+10,y-2);ctx.lineTo(x+7,y+11);ctx.lineTo(x-7,y+11);ctx.lineTo(x-10,y-2);ctx.closePath();ctx.fill();ctx.fillStyle='#217b32';ctx.fillRect(x-5,y-2,10,8);ctx.fillStyle='#e7ffd1';ctx.fillRect(x-4,y-8,4,4);ctx.restore()}}
  for(const h of heartItems){const x=h.x*TILE+32,y=h.y*TILE+32+Math.sin(frame*.09+h.pulse)*3;if(drawSprite('item_heart',x-12,y-12,24,24,0)){ }else{ctx.save();ctx.shadowBlur=18;ctx.shadowColor='#ff6390';ctx.fillStyle='#ff618c';ctx.font='bold 30px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('♥',x,y);ctx.fillStyle='#ffe2ec';ctx.font='bold 12px monospace';ctx.fillText('+1',x,y+1);ctx.restore()}}
- for(const b of bombs)if(!b.dead){const x=b.x*TILE+32,y=b.y*TILE+36;const bombKey=b.acid?'ui_bomb_acid':'ui_bomb_normal';const spriteLoaded=drawSprite(bombKey,x-16,y-24,32,32,0);if(!spriteLoaded){ctx.save();ctx.shadowBlur=13;ctx.shadowColor=b.acid?'#4bff68':b.t<1?'#ff5252':'#141414';ctx.fillStyle=b.acid?'#11752c':'#080b10';ctx.beginPath();ctx.arc(x,y,16,0,Math.PI*2);ctx.fill();ctx.fillStyle=b.acid?'#c5ff9b':'#8695a3';ctx.beginPath();ctx.ellipse(x-5,y-7,5,3,-.6,0,Math.PI*2);ctx.fill();ctx.strokeStyle=b.acid?'#83ff64':'#c2a276';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+7,y-12);ctx.quadraticCurveTo(x+14,y-24,x+18,y-19);ctx.stroke();ctx.fillStyle=frame%8<4?'#fff39c':b.acid?'#66ff53':'#ff793d';ctx.shadowBlur=12;ctx.shadowColor=b.acid?'#5aff53':'#ffad45';ctx.beginPath();ctx.arc(x+18,y-20,4,0,Math.PI*2);ctx.fill();if(b.acid)for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x-8+i*8,y+5+Math.sin(frame*.15+i)*3,2,0,Math.PI*2);ctx.fill()}ctx.restore();}
+ for(const b of bombs)if(!b.dead){const x=b.x*TILE+32,y=b.y*TILE+36;const bombKey=b.acid?'ui_bomb_acid':'ui_bomb_normal';const spriteLoaded=drawSprite(bombKey,x-24,y-32,48,48,0);if(!spriteLoaded){ctx.save();ctx.shadowBlur=13;ctx.shadowColor=b.acid?'#4bff68':b.t<1?'#ff5252':'#141414';ctx.fillStyle=b.acid?'#11752c':'#080b10';ctx.beginPath();ctx.arc(x,y,16,0,Math.PI*2);ctx.fill();ctx.fillStyle=b.acid?'#c5ff9b':'#8695a3';ctx.beginPath();ctx.ellipse(x-5,y-7,5,3,-.6,0,Math.PI*2);ctx.fill();ctx.strokeStyle=b.acid?'#83ff64':'#c2a276';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+7,y-12);ctx.quadraticCurveTo(x+14,y-24,x+18,y-19);ctx.stroke();ctx.fillStyle=frame%8<4?'#fff39c':b.acid?'#66ff53':'#ff793d';ctx.shadowBlur=12;ctx.shadowColor=b.acid?'#5aff53':'#ffad45';ctx.beginPath();ctx.arc(x+18,y-20,4,0,Math.PI*2);ctx.fill();if(b.acid)for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x-8+i*8,y+5+Math.sin(frame*.15+i)*3,2,0,Math.PI*2);ctx.fill()}ctx.restore();}
  ctx.fillStyle=b.t<1?'#ff5353':'#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(Math.max(0,b.t).toFixed(1),x,y-26);
  if(b.t<.45){ctx.save();ctx.globalAlpha=.25+.2*Math.sin(frame*.7);ctx.strokeStyle=b.acid?'#7bff77':'#fff08a';ctx.lineWidth=3;for(const c of blastCells(b)){ctx.strokeRect(c.x*TILE+4,c.y*TILE+4,TILE-8,TILE-8)}ctx.restore()}
 }
@@ -398,7 +706,7 @@ function draw(){
  for(const e of enemies){
   const x=e.x*TILE+32,y=e.y*TILE+32;
   const spriteKey=e.type==='slime'?(frame%60<30?'enemy_slime_1':'enemy_slime_2'):e.type==='runner'?(frame%40<20?'enemy_runner_1':'enemy_runner_2'):e.type==='tank'?(e.hp>=3?'enemy_tank_1':e.hp===2?'enemy_tank_2':'enemy_tank_3'):frame%50<25?'enemy_ghost_1':'enemy_ghost_2';
-  if(drawSprite(spriteKey,x-24,y-24,48,48,0)){
+  if(drawSprite(spriteKey,x-32,y-32,64,64,0)){
    if(e.type==='tank'){ctx.save();ctx.fillStyle='#fff';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('♥'.repeat(e.hp),x,y-22);ctx.restore()}
    continue;
   }
@@ -410,10 +718,11 @@ function draw(){
   if(e.type==='tank'){ctx.fillStyle='#fff';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('♥'.repeat(e.hp),x,y-22)}
   ctx.restore();
  }
- if(player&&gameState!=='dying'){const px=player.x*TILE+32,py=player.y*TILE+32;const facingLeft=(player.dir&&player.dir.x!==0?player.dir.x<0:(player.facing??1)<0);drawHeroSprite(px,py,activeHero?.id||save.currentHero,player.walk,player.invuln>0&&Math.floor(frame/4)%2===0 ? .4 : 1,facingLeft)}
+ if(bot){const x=bot.x*TILE+32,y=bot.y*TILE+32,bob=Math.sin((bot.walk||0)*2)*2,botSprite=bot.animTimer>0&&frame%12<6?'enemy_bot_2':'enemy_bot_1',visible=bot.invuln<=0||Math.floor(frame/4)%2===0;ctx.save();ctx.globalAlpha=visible?1:.3;if(!drawSprite(botSprite,x-36,y-36+bob,72,72,0)){ctx.shadowBlur=16;ctx.shadowColor=bot.color;ctx.fillStyle='#8c143e';ctx.fillRect(x-9,y+8+bob,7,13);ctx.fillRect(x+3,y+8-bob,7,13);ctx.fillStyle=bot.color;ctx.fillRect(x-13,y-13+bob,26,23);ctx.fillStyle='#ffd7e5';ctx.fillRect(x-9,y-24+bob,18,13);ctx.fillStyle='#351022';ctx.fillRect(x-6,y-19+bob,4,4);ctx.fillRect(x+3,y-19+bob,4,4)}ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(`♥ ${bot.lives}   🪙 ${bot.coins}`,x,y-30+bob);ctx.restore()}
+ if(player&&gameState!=='dying'){const px=player.renderX*TILE+32,py=player.renderY*TILE+32;const facingLeft=(player.dir&&player.dir.x!==0?player.dir.x<0:(player.facing??1)<0);drawHeroSprite(px,py,activeHero?.id||save.currentHero,player.walk,player.invuln>0&&Math.floor(frame/4)%2===0 ? .4 : 1,facingLeft)}
  if(deathGhost&&deathGhost.t>0){const alpha=Math.min(.38,deathGhost.t*.38);const facingLeft=(deathGhost.heroDir??1)<0;drawHeroSprite(deathGhost.x*TILE+32,deathGhost.y*TILE+32,deathGhost.heroId,0,alpha,facingLeft)}
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.t*2);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size)}ctx.globalAlpha=1;for(const f of floaters){ctx.globalAlpha=Math.min(1,f.t*1.5);ctx.fillStyle=f.color;ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.fillText(f.text,f.x,f.y)}ctx.globalAlpha=1;
- ctx.fillStyle=theme.accent;ctx.font='bold 12px monospace';ctx.textAlign='left';ctx.fillText(timeAttackActive?`TIME ATTACK · ${Math.ceil(timeAttackRemaining)} СЕК`:isBossRound?`БОСС-РАУНД ${round}`:`${theme.name}  ·  РАУНД ${round}`,12,19);if(screenFlash>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(.85,screenFlash*8)})`;ctx.fillRect(0,0,canvas.width,canvas.height)}ctx.restore();
+ ctx.fillStyle=theme.accent;ctx.font='bold 12px monospace';ctx.textAlign='left';ctx.fillText(isRingMode?`РИНГ · ${Math.ceil(timeAttackRemaining)} СЕК`:timeAttackActive?`TIME ATTACK · ${Math.ceil(timeAttackRemaining)} СЕК`:isBossRound?`БОСС-РАУНД ${round}`:`${theme.name}  ·  РАУНД ${round}`,12,19);if(screenFlash>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(.85,screenFlash*8)})`;ctx.fillRect(0,0,canvas.width,canvas.height)}ctx.restore();
  if(isMobile&&player)drawMiniMap();
 }
 
@@ -430,12 +739,14 @@ function drawMiniMap(){
   ctx.fillRect(mapX+col*cellWidth,mapY+row*cellHeight,Math.ceil(cellWidth),Math.ceil(cellHeight));
  }
  for(const crystal of crystals)if(!crystal.taken){ctx.fillStyle='#73f7ff';ctx.fillRect(mapX+(crystal.x+.25)*cellWidth,mapY+(crystal.y+.25)*cellHeight,Math.max(2,cellWidth*.5),Math.max(2,cellHeight*.5))}
- if(!hiddenExit||exitRevealed){
+ for(const coin of coins){ctx.fillStyle='#ffd66b';ctx.fillRect(mapX+(coin.x+.25)*cellWidth,mapY+(coin.y+.25)*cellHeight,Math.max(2,cellWidth*.5),Math.max(2,cellHeight*.5))}
+ if(!isRingMode&&(!hiddenExit||exitRevealed)){
   const exitOpen=isBossRound?bossHP<=0:crystals.filter(crystal=>crystal.taken).length>=GOAL;
   ctx.fillStyle=exitOpen?'#73ff88':'#a9b5c5';ctx.beginPath();ctx.arc(mapX+(exit.x+.5)*cellWidth,mapY+(exit.y+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill();
  }
  for(const enemy of enemies)if(!enemy.dead){ctx.fillStyle='#ff546f';ctx.beginPath();ctx.arc(mapX+(enemy.x+.5)*cellWidth,mapY+(enemy.y+.5)*cellHeight,2,0,Math.PI*2);ctx.fill()}
- ctx.fillStyle='#fff36b';ctx.beginPath();ctx.arc(mapX+(player.x+.5)*cellWidth,mapY+(player.y+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill();
+ if(bot){ctx.fillStyle=bot.color;ctx.beginPath();ctx.arc(mapX+(bot.x+.5)*cellWidth,mapY+(bot.y+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill()}
+ ctx.fillStyle='#fff36b';ctx.beginPath();ctx.arc(mapX+(player.renderX+.5)*cellWidth,mapY+(player.renderY+.5)*cellHeight,2.5,0,Math.PI*2);ctx.fill();
  ctx.restore();
 }
 
@@ -495,7 +806,7 @@ function playExplosionNoise(){
   source.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);source.start();source.stop(audioContext.currentTime+.12);
  }catch(error){console.warn('Шумовой эффект взрыва недоступен:',error)}
 }
-function showOverlay(html){clearTimeout(overlayCloseTimer);$('overlay').classList.remove('closing');$('overlay').classList.toggle('menu-overlay',gameState==='menu');$('modal').innerHTML=html;$('overlay').classList.add('show')}
+function showOverlay(html){clearTimeout(overlayCloseTimer);const overlay=$('overlay'),modal=$('modal');overlay.classList.remove('closing');overlay.classList.toggle('menu-overlay',gameState==='menu');modal.innerHTML=html;overlay.scrollTop=0;modal.scrollTop=0;overlay.classList.add('show');requestAnimationFrame(()=>{overlay.scrollTop=0;modal.scrollTop=0})}
 function hideOverlay(){const overlay=$('overlay');if(!overlay.classList.contains('show'))return;overlay.classList.remove('show');overlay.classList.add('closing');const modal=$('modal');modal.addEventListener('animationend',event=>{if(event.animationName==='slideUp'&&overlay.classList.contains('closing'))overlay.classList.remove('closing')},{once:true});clearTimeout(overlayCloseTimer);overlayCloseTimer=setTimeout(()=>overlay.classList.remove('closing'),350)}
 function saveProgressNow(feedbackId){try{localStorage.setItem(STORE,JSON.stringify(save));setNotice('Прогресс сохранён!');const feedback=$(feedbackId);if(feedback)feedback.textContent='Прогресс сохранён!'}catch(error){console.error('Не удалось сохранить прогресс:',error);setNotice('Ошибка сохранения прогресса.');const feedback=$(feedbackId);if(feedback)feedback.textContent='Не удалось сохранить прогресс.'}}
 const upgrades=[
@@ -523,13 +834,50 @@ function buyUpgrade(id){const upgrade=upgrades.find(u=>u.id===id);if(!upgrade)re
 function buyArtifact(id){const artifact=artifacts.find(item=>item.id===id);if(!artifact)return;if(save.artifacts.includes(id)){$('shopFeedback').textContent='Этот артефакт уже куплен.';return}if(save.gold<artifact.price){$('shopFeedback').textContent='Не хватает золота для покупки артефакта.';return}save.gold-=artifact.price;save.artifacts.push(id);persist();showShop(0,`Артефакт «${artifact.title}» куплен и сохранён.`);updateHUD()}
 function buySuperArtifact(id){const artifact=superArtifacts.find(item=>item.id===id);if(!artifact)return;if(save.artifacts.includes(id)){$('shopFeedback').textContent='Этот супер-артефакт уже куплен.';return}if(save.amber<artifact.price){$('shopFeedback').textContent='Не хватает янтаря для покупки супер-артефакта.';return}save.amber-=artifact.price;save.artifacts.push(id);persist();showShop(0,`Супер-артефакт «${artifact.title}» куплен и сохранён.`);updateHUD()}
 function buyHero(id){const hero=HEROES.find(item=>item.id===id);if(!hero||save.unlockedHeroes.includes(id))return;if(save.gold<hero.price){$('shopFeedback').textContent=`Не хватает золота для героя ${hero.name}.`;return}save.gold-=hero.price;save.unlockedHeroes.push(id);save.currentHero=id;persist();activeHero=hero;updateHUD();if(gameState==='shop')showShop(0,`Герой ${hero.name} куплен и выбран.`);else showStartMenu()}
-function showGameOver(reason){const record=timeAttackActive?taBest:save.best;const rewardContinue = player && player.lives <= 0 ? '<button class="primary" id="rewardContinueBtn">📺 ПРОДОЛЖИТЬ ЗА РЕКЛАМУ</button>' : '';showOverlay(`<h2>ЗАБЕГ ОКОНЧЕН</h2><p>${reason}. Счёт: <b style="color:#ffd76a">${score.toLocaleString('ru-RU')}</b> · ${timeAttackActive?'рекорд Time Attack':'лучший счёт'}: <b style="color:#ffd76a">${record.toLocaleString('ru-RU')}</b>.</p><div class="modal-actions">${rewardContinue}<button class="primary" id="retryBtn">В МЕНЮ</button></div>`);if($('rewardContinueBtn')){$('rewardContinueBtn').addEventListener('click',()=>{alert('Здесь будет Rewarded Video. Игрок получает 3 жизни и продолжает.');if(player){player.lives=3;player.invuln=1.2;gameState='playing';keys.clear();hideOverlay();updateHUD();setNotice('Продолжение после рекламы: +3 жизни.')}else{startNewRun()}})};$('retryBtn').addEventListener('click',startNewRun)}
-function showStartMenu(){gameState='menu';timeAttackActive=false;keys.clear();activeHero=selectedHero();updateHUD();hideOverlay();showSplash=true;splashTimer=4;splashMenuDelay=0}
-function showStartMenuOverlay(){showOverlay(`<h2>BLAST RUN</h2><p>Выбери героя и режим игры. Выбран: <b>${activeHero.emoji} ${activeHero.name}</b> · ${activeHero.passive}</p><button id="musicToggle">🎵 Музыка: ${musicEnabled?'ВКЛ':'ВЫКЛ'}</button><div class="shop-pages"><h3>ГЕРОИ</h3><div class="shop-grid">${heroCardsMarkup()}</div><div class="shop-grid"><button class="shop-item" id="campaignBtn"><span style="font-size:28px">💣</span><strong>КАМПАНИЯ</strong><small>Собирай кристаллы, проходи босса каждые пять раундов и улучшай снаряжение в магазине.</small></button><button class="shop-item" id="timeAttackBtn"><span style="font-size:28px">⏱️</span><strong>TIME ATTACK · 60 СЕК</strong><small>Собери кристаллы и побеждай врагов до конца времени. Рекорд: ${taBest.toLocaleString('ru-RU')}.</small></button></div><p id="menuFeedback" aria-live="polite"></p></div><div class="shop-footer"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span>🎵 Громкость:</span><input type="range" id="musicVolume" min="0" max="1" step="0.05" value="${save.volume}" style="flex:1"><span id="volumeLabel">${Math.round(save.volume*100)}%</span></div><div class="modal-actions"><button id="saveProgressBtn">💾 Сохранить прогресс</button></div></div>`);bindHeroCards('menuFeedback');$('musicToggle').addEventListener('click',toggleMusic);$('musicVolume').addEventListener('input',event=>{save.volume=Number.parseFloat(event.target.value);if(musicGain)musicGain.gain.value=save.volume;$('volumeLabel').textContent=`${Math.round(save.volume*100)}%`;persist()});$('campaignBtn').addEventListener('click',startCampaign);$('timeAttackBtn').addEventListener('click',startTimeAttack);$('saveProgressBtn').addEventListener('click',()=>saveProgressNow('menuFeedback'))}
-function startCampaign(){if(!Array.isArray(grid)||grid.length!==H)grid=Array.from({length:H},()=>Array(W).fill(0));timeAttackActive=false;round=1;score=0;hasAcidBomb=false;player=null;phoenixUsed=false;timeAttackRemaining=60;gameState='playing';hideOverlay();generateLevel();roundStarted=performance.now()/1000;setNotice('Кампания началась! Собери 5 кристаллов.')}
-function startTimeAttack(){if(!Array.isArray(grid)||grid.length!==H)grid=Array.from({length:H},()=>Array(W).fill(0));timeAttackActive=true;timeAttackRemaining=60;taSpawnTimer=8;round=1;score=0;hasAcidBomb=false;player=null;phoenixUsed=false;gameState='playing';hideOverlay();generateLevel();roundStarted=performance.now()/1000;setNotice('60 секунд! Собирай кристаллы и побеждай врагов.')}
+function showGameOver(reason){const record=isRingMode?(bot?.coins||0):timeAttackActive?taBest:save.best;const rewardContinue=!isRingMode&&player&&player.lives<=0?'<button class="primary" id="rewardContinueBtn">📺 ПРОДОЛЖИТЬ ЗА РЕКЛАМУ</button>':'';const resultText=isRingMode?`Монеты игрока: <b style="color:#ffd76a">${score}</b> · бот: <b style="color:#ff2c78">${bot?.coins||0}</b>.`:`Счёт: <b style="color:#ffd76a">${score.toLocaleString('ru-RU')}</b> · ${timeAttackActive?'рекорд Time Attack':'лучший счёт'}: <b style="color:#ffd76a">${record.toLocaleString('ru-RU')}</b>.`;showOverlay(`<h2>${isRingMode?'РИНГ ЗАВЕРШЁН':'ЗАБЕГ ОКОНЧЕН'}</h2><p>${reason}${isRingMode?'':'.'} ${resultText}</p><div class="modal-actions">${rewardContinue}<button class="primary" id="retryBtn">В МЕНЮ</button></div>`);if($('rewardContinueBtn')){$('rewardContinueBtn').addEventListener('click',()=>{alert('Здесь будет Rewarded Video. Игрок получает 3 жизни и продолжает.');if(player){player.lives=3;player.invuln=1.2;gameState='playing';keys.clear();hideOverlay();updateHUD();setNotice('Продолжение после рекламы: +3 жизни.')}else{startNewRun()}})};$('retryBtn').addEventListener('click',startNewRun)}
+function showStartMenu(){gameState='menu';timeAttackActive=false;isRingMode=false;bot=null;coins=[];keys.clear();activeHero=selectedHero();updateHUD();hideOverlay();showSplash=true;splashTimer=4;splashMenuDelay=0}
+function showStartMenuOverlay(){
+ const volumePercent=Math.round(save.volume*100);
+ const modeCards=`
+  <div class="shop-grid mode-grid" style="margin-bottom:15px">
+   <button class="shop-item primary" id="campaignBtn"><span class="emoji">💣</span><div><strong>КАМПАНИЯ</strong><small>Собери кристаллы и найди выход.</small></div></button>
+   <button class="shop-item primary" id="timeAttackBtn"><span class="emoji">⏱️</span><div><strong>TIME ATTACK · 60 СЕК</strong><small>Собери максимум кристаллов за минуту.</small></div></button>
+   <button class="shop-item primary" id="ringBtn"><span class="emoji">🥊</span><div><strong>РИНГ (PvP)</strong><small>Сразись с роботом за монеты и жизни.</small></div></button>
+  </div>`;
+ showOverlay(`<h2 style="margin-bottom:10px">BLAST RUN</h2>${modeCards}<div class="music-controls" style="background:#152234;padding:8px;border-radius:8px"><button id="musicToggle">🎵 Музыка: ${musicEnabled?'ВКЛ':'ВЫКЛ'}</button><span>🔊 <input type="range" id="volumeSlider" min="0" max="100" value="${volumePercent}" aria-label="Громкость музыки"> <span id="volumeLabel">${volumePercent}%</span></span></div><div class="shop-pages"><h3>ГЕРОИ</h3><div class="shop-grid">${heroCardsMarkup()}</div><p>Выбран: <b>${activeHero.emoji} ${activeHero.name}</b> · ${activeHero.passive}</p><p id="menuFeedback" aria-live="polite"></p></div><div class="shop-footer"><div class="modal-actions"><button id="saveProgressBtn">💾 Сохранить прогресс</button></div></div>`);
+ bindHeroCards('menuFeedback');
+ $('musicToggle').addEventListener('click',toggleMusic);
+ $('volumeSlider').addEventListener('input',event=>{save.volume=Number.parseFloat(event.target.value)/100;if(musicGain)musicGain.gain.value=save.volume;$('volumeLabel').textContent=`${Math.round(save.volume*100)}%`;persist()});
+ $('campaignBtn').addEventListener('click',startCampaign);
+ $('timeAttackBtn').addEventListener('click',startTimeAttack);
+ $('ringBtn').addEventListener('click',startRingMode);
+ $('saveProgressBtn').addEventListener('click',()=>saveProgressNow('menuFeedback'));
+}
+function startCampaign(){if(!Array.isArray(grid)||grid.length!==H)grid=Array.from({length:H},()=>Array(W).fill(0));timeAttackActive=false;isRingMode=false;bot=null;coins=[];round=1;score=0;hasAcidBomb=false;player=null;phoenixUsed=false;timeAttackRemaining=60;gameState='playing';hideOverlay();generateLevel();roundStarted=performance.now()/1000;setNotice('Кампания началась! Собери 5 кристаллов.')}
+function startTimeAttack(){if(!Array.isArray(grid)||grid.length!==H)grid=Array.from({length:H},()=>Array(W).fill(0));isRingMode=false;bot=null;coins=[];timeAttackActive=true;timeAttackRemaining=60;taSpawnTimer=8;round=1;score=0;hasAcidBomb=false;player=null;phoenixUsed=false;gameState='playing';hideOverlay();generateLevel();roundStarted=performance.now()/1000;setNotice('60 секунд! Собирай кристаллы и побеждай врагов.')}
+function startRingMode(){
+ if(!Array.isArray(grid)||grid.length!==H)grid=Array.from({length:H},()=>Array(W).fill(0));
+ isRingMode=true;timeAttackActive=false;timeAttackRemaining=60;slowTimeRemaining=0;slowTimeUsedRound=false;round=1;score=0;hasAcidBomb=false;player=null;bot=null;coins=[];keys.clear();phoenixUsed=false;gameState='playing';hideOverlay();generateLevel();
+ grid=Array.from({length:H},(_,y)=>Array.from({length:W},(_,x)=>x===0||y===0||x===W-1||y===H-1||x%2===0&&y%2===0?1:0));
+ for(let y=1;y<H-1;y++)if(y!==3&&y!==5)grid[y][7]=1;
+ for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){
+  if(grid[y][x]!==0||Math.abs(x-player.x)+Math.abs(y-player.y)<=2||x>=11&&y<=2)continue;
+  if(Math.random()<.30){const roll=Math.random();grid[y][x]=roll<.45?2:roll<.72?3:roll<.90?4:5}
+ }
+ blockHp.clear();for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(BLOCK_MAX_HP[grid[y][x]])blockHp.set(cellKey(x,y),BLOCK_MAX_HP[grid[y][x]]);
+ const botSpawns=[];for(let y=1;y<=2;y++)for(let x=11;x<W-1;x++)if(grid[y][x]===0)botSpawns.push({x,y});
+ const botStart=botSpawns[rand(botSpawns.length)]||{x:W-2,y:1};
+ bot={x:botStart.x,y:botStart.y,coins:0,color:'#ff2c78',lives:3,invuln:0,moveTimer:.3,bombCooldown:0,walk:0,animTimer:0,dir:{x:-1,y:0}};
+ const floor=[];
+ for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++)if(grid[y][x]===0&&!(x===player.x&&y===player.y)&&!(x===bot.x&&y===bot.y)&&Math.abs(x-player.x)+Math.abs(y-player.y)>1&&Math.abs(x-bot.x)+Math.abs(y-bot.y)>1)floor.push({x,y});
+ for(let i=floor.length-1;i>0;i--){const j=rand(i+1);[floor[i],floor[j]]=[floor[j],floor[i]]}
+ coins=floor.slice(0,Math.min(12+rand(4),floor.length)).map(cell=>({...cell,pulse:Math.random()*6}));
+ player.lives=3;updateHUD();setNotice('Собери больше монет, чем бот, за 60 секунд!');
+}
 function startNewRun(){phoenixUsed=false;showStartMenu()}
 function loop(ts){const now=ts/1000,dt=Math.min(.05,lastTime?now-lastTime:1/60);lastTime=now;update(dt);draw();requestAnimationFrame(loop)}
+const canvasSizeObserver=new ResizeObserver(syncCanvasViewport);
+canvasSizeObserver.observe(boardWrap);
 window.addEventListener('resize',updateResponsiveMode);
 window.addEventListener('keydown',e=>{const key=e.key;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(key))e.preventDefault();if(key===' '&&!e.repeat)bombAction();else if(key.toLowerCase()==='r'&&!e.repeat){if(gameState!=='shop')startNewRun()}else setDirection(key,true)});
 window.addEventListener('keyup',e=>setDirection(e.key,false));window.addEventListener('blur',()=>keys.clear());
@@ -573,6 +921,8 @@ function init(){
  loadImage('enemy_tank_3','assets/enemy_tank_3.png');
  loadImage('enemy_ghost_1','assets/enemy_ghost_1.png');
  loadImage('enemy_ghost_2','assets/enemy_ghost_2.png');
+ loadImage('enemy_bot_1','assets/enemy_bot_1.png');
+ loadImage('enemy_bot_2','assets/enemy_bot_2.png');
  loadImage('hero_neo_1','assets/hero_neo_1.png');
  loadImage('hero_neo_2','assets/hero_neo_2.png');
  loadImage('hero_ninja_1','assets/hero_ninja_1.png');
